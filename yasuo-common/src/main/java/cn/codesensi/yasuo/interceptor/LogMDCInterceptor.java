@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 日志拦截器
  */
-public class LogInterceptor implements HandlerInterceptor {
+public class LogMDCInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         MDC.put(Constant.TRACE_ID, IdUtil.simpleUUID());

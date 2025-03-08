@@ -1,7 +1,7 @@
 package cn.codesensi.yasuo.config;
 
 import cn.codesensi.yasuo.constant.Constant;
-import cn.codesensi.yasuo.interceptor.LogInterceptor;
+import cn.codesensi.yasuo.interceptor.LogMDCInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class LogConfig implements WebMvcConfigurer {
+public class LogMDCConfig implements WebMvcConfigurer {
 
     /**
      * 注册日志拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LogInterceptor()).addPathPatterns(Constant.ROOT_PATH);
+        registry.addInterceptor(new LogMDCInterceptor()).addPathPatterns(Constant.ROOT_PATH);
     }
 
 }
