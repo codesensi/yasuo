@@ -1,0 +1,106 @@
+# 项目相关配置
+yasuo:
+  # 名称
+  name: yasuo
+  # 版本
+  version: ${revision}
+  # 版权
+  copyright: 2025
+
+server:
+  port: 8080
+  # 开启优雅停机
+  shutdown: graceful
+
+spring:
+  application:
+    name: ${yasuo.name}
+  lifecycle:
+    # 优雅停机最大等待时间
+    timeout-per-shutdown-phase: 60s
+  profiles:
+    active: prod
+
+# logback日志配置
+logging:
+  level:
+    # trace级别可打印sql结果
+    cn.codesensi.yasuo: trace
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} [%X{traceId}] %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:%5p} ${PID:- } --- [%15.15t] [%X{traceId}] %-40.40logger{39} : %m%n'
+  file:
+    name: logs/${spring.application.name}_${spring.profiles.active}.log
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${logging.file.name}.%d.%i.log
+      max-file-size: 100MB
+      max-history: 180
+
+# 项目api文档访问地址：http://localhost:8080/doc.html
+# springdoc-openapi项目配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /v3/api-docs-ui
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: cn.codesensi.yasuo
+# knife4j增强配置
+knife4j:
+  enable: true
+  setting:
+    # 是否显示界面中SwaggerModel功能
+    enable-swagger-models: false
+    # 是否显示界面中"文档管理"功能
+    enable-document-manage: false
+    # 调试Tab是否显示AfterScript功能,默认开启
+    enable-after-script: false
+    # 是否显示OpenAPI规范
+    enable-open-api: false
+    # 开启动态请求参数
+    enable-dynamic-parameter: true
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml # MyBatis Mapper 所对应的 XML 文件位置
+  global-config:
+    db-config:
+      id-type: assign_id # 全局默认主键(雪花id)
+      logic-delete-field: is_delete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值
+      logic-not-delete-value: 0 # 逻辑未删除值
+      update-strategy: not_null # update时的字段验证策略(null字段不更新数据库)
+
+# sa-token配置
+sa-token:
+  # token前缀
+  token-prefix: Bearer
+  # token 名称（同时也是 cookie 名称）
+  token-name: Authorization
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: false
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: random-128
+  # 是否输出操作日志
+  is-log: true
+  # jwt秘钥
+  jwt-secret-key: f3c55ed9e4f54edfa8867f904aef6742
+
+# mica-xss配置
+mica:
+  xss:
+    enabled: true
+    trim-text: true
+    mode: escape
+    path-patterns: /**
+    path-exclude-patterns:
