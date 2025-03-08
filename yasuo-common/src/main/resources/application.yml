@@ -19,7 +19,7 @@ spring:
     # 优雅停机最大等待时间
     timeout-per-shutdown-phase: 60s
   profiles:
-    active: prod
+    active: dev
 
 # logback日志配置
 logging:
