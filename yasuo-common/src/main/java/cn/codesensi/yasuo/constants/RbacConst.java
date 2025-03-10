@@ -1,27 +1,9 @@
-package cn.codesensi.yasuo.constant;
+package cn.codesensi.yasuo.constants;
 
 /**
- * 常量类
+ * 权限常量
  */
-public class Constant {
-
-    public static final Integer ZERO_INT = 0;
-
-    public static final Integer ONE_INT = 1;
-
-    public static final String ZERO_STRING = "0";
-
-    public static final String ONE_STRING = "1";
-
-    /**
-     * 异步任务执行器名称
-     */
-    public static final String ASYNC_TASK_EXECUTOR_NAME = "asyncTaskExecutor";
-
-    /**
-     * 定时任务执行器名称
-     */
-    public static final String SCHEDULED_TASK_EXECUTOR_NAME = "scheduledTaskExecutor";
+public class RbacConst {
 
     /**
      * 超级管理员id
@@ -52,12 +34,4 @@ public class Constant {
      * 系统管理接口路径
      */
     public static final String SYS_PATH = "/sys/**";
-
-    /**
-     * traceId
-     */
-    public static final String TRACE_ID = "traceId";
-
-
-
 }

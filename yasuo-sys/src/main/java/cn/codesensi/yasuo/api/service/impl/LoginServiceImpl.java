@@ -1,10 +1,11 @@
 package cn.codesensi.yasuo.api.service.impl;
 
 import cn.codesensi.yasuo.api.service.LoginService;
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.enums.LoginMode;
 import cn.codesensi.yasuo.enums.LoginType;
 import cn.codesensi.yasuo.exception.LoginException;
+import cn.codesensi.yasuo.ext.TaskManager;
 import cn.codesensi.yasuo.factory.LogRecordFactory;
 import cn.codesensi.yasuo.pojo.dto.AccountUserDTO;
 import cn.codesensi.yasuo.pojo.vo.LoginSuccessVO;
@@ -12,7 +13,6 @@ import cn.codesensi.yasuo.properties.CaptchaProperties;
 import cn.codesensi.yasuo.sys.entity.LogLogin;
 import cn.codesensi.yasuo.sys.entity.SysUser;
 import cn.codesensi.yasuo.sys.service.ISysUserService;
-import cn.codesensi.yasuo.ext.TaskManager;
 import cn.codesensi.yasuo.util.Ip2regionUtil;
 import cn.codesensi.yasuo.util.IpUtil;
 import cn.codesensi.yasuo.util.ServletUtil;
@@ -22,6 +22,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -32,6 +33,7 @@ import java.time.LocalDateTime;
 /**
  * 登录接口实现
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -92,7 +94,7 @@ public class LoginServiceImpl implements LoginService {
         logLogin.setOs(userAgent.getOperatingSystem().getName());
         logLogin.setDevice(userAgent.getOperatingSystem().getDeviceType().getName());
         logLogin.setBrowser(userAgent.getBrowser().getName());
-        logLogin.setStatus(Constant.ONE_INT);
+        logLogin.setStatus(CommonConst.ONE_INT);
         logLogin.setCreator(StpUtil.getLoginIdAsLong());
         TaskManager.me().execute(LogRecordFactory.login(logLogin));
         return loginSuccessVO;

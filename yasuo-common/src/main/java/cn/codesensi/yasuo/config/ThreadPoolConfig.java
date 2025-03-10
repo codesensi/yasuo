@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.config;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.ThreadConst;
 import cn.codesensi.yasuo.ext.ThreadPoolTaskExecutorMDC;
 import cn.codesensi.yasuo.properties.ThreadPoolProperties;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class ThreadPoolConfig {
     /**
      * 执行异步任务
      */
-    @Bean(name = Constant.ASYNC_TASK_EXECUTOR_NAME)
+    @Bean(name = ThreadConst.ASYNC_TASK_EXECUTOR_NAME)
     public ThreadPoolTaskExecutor asyncTaskExecutor() {
         ThreadPoolTaskExecutorMDC executor = new ThreadPoolTaskExecutorMDC();
         executor.setCorePoolSize(threadPoolProperties.getCorePoolSize());
@@ -41,7 +41,8 @@ public class ThreadPoolConfig {
             // 反射加载拒绝策略类
             Class<?> clazz = Class.forName("java.util.concurrent.ThreadPoolExecutor$" + threadPoolProperties.getRejectedExecutionHandler());
             executor.setRejectedExecutionHandler((RejectedExecutionHandler) clazz.getDeclaredConstructor().newInstance());
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException e) {
             // 默认使用CallerRunsPolicy策略：直接在execute方法的调用线程中运行被拒绝的任务
             executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         }
@@ -52,7 +53,7 @@ public class ThreadPoolConfig {
     /**
      * 执行定时任务
      */
-    @Bean(name = Constant.SCHEDULED_TASK_EXECUTOR_NAME)
+    @Bean(name = ThreadConst.SCHEDULED_TASK_EXECUTOR_NAME)
     protected ScheduledExecutorService scheduledTaskExecutor() {
         return new ScheduledThreadPoolExecutor(threadPoolProperties.getCorePoolSize(),
                 new BasicThreadFactory.Builder().namingPattern("scheduled-task-%d").daemon(true).build(),

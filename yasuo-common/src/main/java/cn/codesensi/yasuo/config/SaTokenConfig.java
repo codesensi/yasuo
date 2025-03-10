@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.config;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.RbacConst;
 import cn.codesensi.yasuo.properties.YasuoProperties;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
@@ -36,10 +36,10 @@ public class SaTokenConfig implements WebMvcConfigurer {
         if (!yasuoProperties.getSkipAuth()) {
             registry.addInterceptor(new SaInterceptor(handler -> {
                 // 登录校验
-                SaRouter.match(Constant.ROOT_PATH).notMatch(Constant.SWAGGER_PATH).check(r -> StpUtil.checkLogin());
+                SaRouter.match(RbacConst.ROOT_PATH).notMatch(RbacConst.SWAGGER_PATH).check(r -> StpUtil.checkLogin());
                 // 系统功能：超级管理员角色
-                SaRouter.match(Constant.SYS_PATH).check(r -> StpUtil.checkRole(Constant.ROLE_ADMIN_CODE));
-            })).addPathPatterns(Constant.ROOT_PATH);
+                SaRouter.match(RbacConst.SYS_PATH).check(r -> StpUtil.checkRole(RbacConst.ROLE_ADMIN_CODE));
+            })).addPathPatterns(RbacConst.ROOT_PATH);
         }
     }
 

@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.strategy.captcha.impl;
 
-import cn.codesensi.yasuo.constant.CacheConstant;
+import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.exception.SysException;
 import cn.codesensi.yasuo.pojo.dto.CaptchaDTO;
 import cn.codesensi.yasuo.pojo.vo.CaptchaVO;
@@ -41,7 +41,7 @@ public class SmsCaptchaStrategyImpl implements CaptchaStrategy {
         // TODO 发短信
 
         // 放入缓存
-        stringRedisTemplate.opsForValue().set(key, result, CacheConstant.EXPIRE_5_MINUTES, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(key, result, CacheConst.EXPIRE_5_MINUTES, TimeUnit.MINUTES);
         // 返回结果
         CaptchaVO captchaVO = new CaptchaVO();
         captchaVO.setKey(key);

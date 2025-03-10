@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.strategy.captcha.impl;
 
-import cn.codesensi.yasuo.constant.CacheConstant;
+import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.exception.SysException;
 import cn.codesensi.yasuo.pojo.dto.CaptchaDTO;
 import cn.codesensi.yasuo.pojo.vo.CaptchaVO;
@@ -54,7 +54,7 @@ public class ImageCaptchaStrategyImpl implements CaptchaStrategy {
             String text = captcha.text();
             log.info("图形验证码唯一标识：{}，验证码内容：{}", key, text);
             // 放入缓存
-            stringRedisTemplate.opsForValue().set(key, text, CacheConstant.EXPIRE_5_MINUTES, TimeUnit.MINUTES);
+            stringRedisTemplate.opsForValue().set(key, text, CacheConst.EXPIRE_5_MINUTES, TimeUnit.MINUTES);
             // 返回结果
             captchaVO.setKey(key);
             captchaVO.setResult(captcha.toBase64());

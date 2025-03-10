@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.interceptor;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.hutool.core.util.IdUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LogMDCInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        MDC.put(Constant.TRACE_ID, IdUtil.simpleUUID());
+        MDC.put(CommonConst.TRACE_ID, IdUtil.simpleUUID());
         return true;
     }
 
@@ -24,7 +24,7 @@ public class LogMDCInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        MDC.remove(Constant.TRACE_ID);
+        MDC.remove(CommonConst.TRACE_ID);
     }
 
 }

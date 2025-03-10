@@ -1,7 +1,7 @@
 package cn.codesensi.yasuo.aspect;
 
 import cn.codesensi.yasuo.annotation.LogOperate;
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.factory.LogRecordFactory;
 import cn.codesensi.yasuo.ext.TaskManager;
 import cn.codesensi.yasuo.util.Ip2regionUtil;
@@ -130,12 +130,12 @@ public class LogOperateAspect {
                 logOperate.setRequestMethod(requestMethod);
                 logOperate.setRequestMode(requestMode);
                 // 响应相关字段
-                logOperate.setResponseStatus(Constant.ONE_INT);
+                logOperate.setResponseStatus(CommonConst.ONE_INT);
                 logOperate.setResponseTime(LocalDateTime.now());
                 logOperate.setResponseConsume(System.currentTimeMillis() - TIME_THREADLOCAL.get());
                 // 异常相关字段
                 if (ObjUtil.isNotNull(throwable)) {
-                    logOperate.setResponseStatus(Constant.ZERO_INT);
+                    logOperate.setResponseStatus(CommonConst.ZERO_INT);
                     logOperate.setErrorTime(LocalDateTime.now());
                     logOperate.setErrorMessage(throwable.getMessage());
                 }

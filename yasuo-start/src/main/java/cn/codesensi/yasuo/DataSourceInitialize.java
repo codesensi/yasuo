@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.properties.DBProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +69,7 @@ public class DataSourceInitialize {
             // 组装不连接至指定库的连接URL
             noDatabaseUrl = "jdbc:" + databasePlatform + "://" + hostAndPort + "/";
             // 得到连接地址中的库名
-            databaseName = databaseUri.getPath().substring(Constant.ONE_INT);
+            databaseName = databaseUri.getPath().substring(CommonConst.ONE_INT);
         } catch (URISyntaxException e) {
             log.error("[数据初始化]获取数据库配置失败！原因是：{}", e.getMessage(), e);
             throw new RuntimeException(e);

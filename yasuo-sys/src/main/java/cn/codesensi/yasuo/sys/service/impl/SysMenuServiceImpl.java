@@ -1,7 +1,7 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
-import cn.codesensi.yasuo.constant.CacheConstant;
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CacheConst;
+import cn.codesensi.yasuo.constants.RbacConst;
 import cn.codesensi.yasuo.sys.entity.SysMenu;
 import cn.codesensi.yasuo.sys.mapper.SysMenuMapper;
 import cn.codesensi.yasuo.sys.service.ISysMenuService;
@@ -23,12 +23,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @param userId 用户ID
      * @return 权限编码列表
      */
-    @Cacheable(cacheNames = CacheConstant.CACHE_USER, key ="'permission:' + #userId")
+    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'permission:' + #userId")
     @Override
     public List<String> listPermsByUserId(Long userId) {
         // 超级管理员
-        if (Constant.ADMIN_ID.equals(userId)) {
-            return List.of(Constant.PERM_ADMIN_CODE);
+        if (RbacConst.ADMIN_ID.equals(userId)) {
+            return List.of(RbacConst.PERM_ADMIN_CODE);
         }
         return baseMapper.listPermsByUserId(userId);
     }
