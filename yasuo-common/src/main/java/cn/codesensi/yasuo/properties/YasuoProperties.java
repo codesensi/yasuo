@@ -23,17 +23,13 @@ public class YasuoProperties {
     private String version;
 
     /**
+     * 负责人
+     */
+    private String author;
+
+    /**
      * 版权
      */
     private String copyright;
 
-    /**
-     * 演示模式
-     */
-    private Boolean demoMode;
-
-    /**
-     * 跳过鉴权
-     */
-    private Boolean skipAuth;
 }

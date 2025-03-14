@@ -18,7 +18,7 @@ public class RbacConst {
     /**
      * 超级管理员权限码
      */
-    public static final String PERM_ADMIN_CODE = "*";
+    public static final String PERM_ADMIN_CODE = "*:*:*";
 
     /**
      * 根接口路径

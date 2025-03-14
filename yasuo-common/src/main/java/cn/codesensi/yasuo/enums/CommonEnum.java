@@ -19,12 +19,12 @@ public class CommonEnum {
         ;
 
         /**
-         * 验证码类型
+         * 码值
          */
         private final Integer code;
 
         /**
-         * 枚举说明
+         * 说明
          */
         private final String message;
 
@@ -45,16 +45,42 @@ public class CommonEnum {
         ;
 
         /**
-         * 验证码类型
+         * 码值
          */
         private final Integer code;
 
         /**
-         * 枚举说明
+         * 说明
          */
         private final String message;
 
         EnableOrDisable(Integer code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+    }
+
+    /**
+     * 成功(正常)/失败(异常)
+     */
+    @Getter
+    public enum OkOrFail {
+
+        OK(CommonConst.ONE_INT, "成功(正常)"),
+        FAIL(CommonConst.ZERO_INT, "失败(异常)"),
+        ;
+
+        /**
+         * 码值
+         */
+        private final Integer code;
+
+        /**
+         * 说明
+         */
+        private final String message;
+
+        OkOrFail(Integer code, String message) {
             this.code = code;
             this.message = message;
         }

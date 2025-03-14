@@ -1,7 +1,7 @@
 package cn.codesensi.yasuo.config;
 
 import cn.codesensi.yasuo.constants.RbacConst;
-import cn.codesensi.yasuo.properties.YasuoProperties;
+import cn.codesensi.yasuo.properties.SecureProperties;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
 import cn.dev33.satoken.router.SaRouter;
@@ -25,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class SaTokenConfig implements WebMvcConfigurer {
 
-    private final YasuoProperties yasuoProperties;
+    private final SecureProperties secureProperties;
 
     /**
      * 注册 Sa-Token 路由拦截器
@@ -33,7 +33,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 开发时可跳过鉴权
-        if (!yasuoProperties.getSkipAuth()) {
+        if (!secureProperties.getSkipAuth()) {
             registry.addInterceptor(new SaInterceptor(handler -> {
                 // 登录校验
                 SaRouter.match(RbacConst.ROOT_PATH).notMatch(RbacConst.SWAGGER_PATH).check(r -> StpUtil.checkLogin());

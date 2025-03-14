@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <revision>1.0.1</revision>
+        <revision>1.0.0</revision>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 依赖版本 -->
@@ -168,6 +168,7 @@
 
     <build>
         <plugins>
+            <!-- 配置编译行为 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -176,24 +177,30 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- 配置编译时的注解处理器 -->
                     <annotationProcessorPaths>
+                        <!-- lombok生成 getter、setter、toString 等代码 -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
                         </path>
+                        <!-- 处理 @ConfigurationProperties 注解，生成配置元数据文件（spring-configuration-metadata.json），以支持 IDE 的配置提示。 -->
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
                             <version>${spring-boot.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                    <!-- 配置编译器参数 -->
+                    <!-- 向 Java 编译器传递额外的参数，保留方法参数的名称信息（用于反射时获取参数名称），如果没有 -parameters，反射时只能获取到 arg0、arg1 这样的参数名。 -->
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
-            <!-- 跳过测试 -->
+            <!-- 配置跳过单元测试 -->
+            <!-- 当运行 mvn test 或 mvn install 时，不会执行任何单元测试。测试代码仍然会被编译，但不会运行。 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -202,16 +209,19 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <!-- 统一版本号管理 -->
+            <!-- 成一个扁平化的 pom.xml 文件，移除动态内容，使其更适合发布到 Maven 仓库或与其他工具集成。 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
                 <version>${flatten-maven-plugin.version}</version>
                 <configuration>
+                    <!-- 生成扁平化的 pom.xml 文件并覆盖原始文件 -->
                     <updatePomFile>true</updatePomFile>
+                    <!-- 仅解析对 CI（持续集成）友好的部分，保留一些动态内容（如 ${project.version}），但移除其他不必要的动态内容。 -->
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>
                 </configuration>
                 <executions>
+                    <!-- 在 process-resources 阶段执行 flatten 目标，生成扁平化的 pom.xml。 -->
                     <execution>
                         <id>flatten</id>
                         <phase>process-resources</phase>
@@ -219,6 +229,7 @@
                             <goal>flatten</goal>
                         </goals>
                     </execution>
+                    <!-- 在 clean 阶段执行 clean 目标，清理生成的扁平化 pom.xml。 -->
                     <execution>
                         <id>flatten.clean</id>
                         <phase>clean</phase>
@@ -229,31 +240,44 @@
                 </executions>
             </plugin>
         </plugins>
+        <!-- 配置Maven资源过滤 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <!-- 仅过滤特定文件 -->
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.yml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>public</id>-->
-<!--            <name>huawei nexus</name>-->
-<!--            <url>https://mirrors.huaweicloud.com/repository/maven/</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <!-- 配置依赖和插件下载加速 -->
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>public</id>-->
+    <!--            <name>huawei nexus</name>-->
+    <!--            <url>https://mirrors.huaweicloud.com/repository/maven/</url>-->
+    <!--            <releases>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </releases>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
 
-<!--    <pluginRepositories>-->
-<!--        <pluginRepository>-->
-<!--            <id>public</id>-->
-<!--            <name>huawei nexus</name>-->
-<!--            <url>https://mirrors.huaweicloud.com/repository/maven/</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </pluginRepository>-->
-<!--    </pluginRepositories>-->
+    <!--    <pluginRepositories>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>public</id>-->
+    <!--            <name>huawei nexus</name>-->
+    <!--            <url>https://mirrors.huaweicloud.com/repository/maven/</url>-->
+    <!--            <releases>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </releases>-->
+    <!--            <snapshots>-->
+    <!--                <enabled>false</enabled>-->
+    <!--            </snapshots>-->
+    <!--        </pluginRepository>-->
+    <!--    </pluginRepositories>-->
 
 </project>
