@@ -1,20 +1,18 @@
 package cn.codesensi.yasuo.api.service.impl;
 
 import cn.codesensi.yasuo.api.service.LoginService;
-import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.enums.CommonEnum;
 import cn.codesensi.yasuo.enums.LoginMode;
 import cn.codesensi.yasuo.enums.LoginType;
 import cn.codesensi.yasuo.exception.LoginException;
 import cn.codesensi.yasuo.ext.TaskManager;
 import cn.codesensi.yasuo.factory.LogRecordFactory;
-import cn.codesensi.yasuo.pojo.dto.AccountUserDTO;
-import cn.codesensi.yasuo.pojo.vo.LoginSuccessVO;
+import cn.codesensi.yasuo.pojo.dto.AccountDTO;
+import cn.codesensi.yasuo.pojo.vo.LoginVO;
 import cn.codesensi.yasuo.properties.CaptchaProperties;
 import cn.codesensi.yasuo.properties.SecureProperties;
-import cn.codesensi.yasuo.properties.YasuoProperties;
-import cn.codesensi.yasuo.sys.entity.LogLogin;
-import cn.codesensi.yasuo.sys.entity.SysUser;
+import cn.codesensi.yasuo.pojo.entity.LogLogin;
+import cn.codesensi.yasuo.pojo.entity.SysUser;
 import cn.codesensi.yasuo.sys.service.ISysUserService;
 import cn.codesensi.yasuo.util.Ip2regionUtil;
 import cn.codesensi.yasuo.util.IpUtil;
@@ -52,22 +50,22 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 账号密码登录
      *
-     * @param accountUserDTO 登录用户信息
+     * @param accountDTO 登录用户信息
      * @return 登录成功后信息
      */
     @Override
-    public LoginSuccessVO loginAccount(@Validated @RequestBody AccountUserDTO accountUserDTO) {
+    public LoginVO loginAccount(@Validated @RequestBody AccountDTO accountDTO) {
         // 校验验证码
         if (captchaProperties.getEnabled()) {
-            if (StrUtil.isBlank(accountUserDTO.getCaptchaKey())) {
+            if (StrUtil.isBlank(accountDTO.getCaptchaKey())) {
                 throw new LoginException("验证码唯一标识为空");
             }
-            String captcha = accountUserDTO.getCaptcha();
+            String captcha = accountDTO.getCaptcha();
             if (StrUtil.isBlank(captcha)) {
                 throw new LoginException("验证码为空");
             }
             // 与缓存中的值对比
-            String captchaCache = stringRedisTemplate.opsForValue().get(accountUserDTO.getCaptchaKey());
+            String captchaCache = stringRedisTemplate.opsForValue().get(accountDTO.getCaptchaKey());
             if (StrUtil.isBlank(captchaCache)) {
                 throw new LoginException("验证码不存在");
             }
@@ -76,12 +74,12 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         SysUser sysUser = sysUserService.lambdaQuery()
-                .eq(SysUser::getUsername, accountUserDTO.getUsername())
+                .eq(SysUser::getUsername, accountDTO.getUsername())
                 .one();
         if (ObjUtil.isNull(sysUser)) {
             throw new LoginException("账号不存在");
         }
-        if (!BCrypt.checkpw(accountUserDTO.getPassword(), sysUser.getPassword())) {
+        if (!BCrypt.checkpw(accountDTO.getPassword(), sysUser.getPassword())) {
             throw new LoginException("账号密码错误");
         }
 
@@ -91,25 +89,25 @@ public class LoginServiceImpl implements LoginService {
         // 登录
         StpUtil.login(userId);
 
-        LoginSuccessVO loginSuccessVO = new LoginSuccessVO();
-        loginSuccessVO.setAccessToken(StpUtil.getTokenValue());
+        LoginVO loginVO = new LoginVO();
+        loginVO.setAccessToken(StpUtil.getTokenValue());
         // 获取refreshToken
         Long refreshTokenTimeout = secureProperties.getRefreshTokenTimeout();
         String refreshToken = SaTempUtil.createToken(userId, refreshTokenTimeout);
-        loginSuccessVO.setRefreshToken(refreshToken);
+        loginVO.setRefreshToken(refreshToken);
         // accessToken过期时间
         long tokenTimeout = StpUtil.getTokenTimeout();
-        loginSuccessVO.setExpireTime(LocalDateTimeUtil.now().plusSeconds(tokenTimeout));
+        loginVO.setExpireTime(LocalDateTimeUtil.now().plusSeconds(tokenTimeout));
         // 其他信息
-        loginSuccessVO.setUsername(sysUser.getUsername());
-        loginSuccessVO.setNickname(sysUser.getNickname());
-        loginSuccessVO.setAvatar(sysUser.getAvatar());
+        loginVO.setUsername(sysUser.getUsername());
+        loginVO.setNickname(sysUser.getNickname());
+        loginVO.setAvatar(sysUser.getAvatar());
         // 角色信息
-        List<String> roleList = StpUtil.getRoleList();
-        loginSuccessVO.setRoles(roleList);
+        List<String> roles = StpUtil.getRoleList();
+        loginVO.setRoles(roles);
         // 权限
-        List<String> permissionList = StpUtil.getPermissionList();
-        loginSuccessVO.setPermissions(permissionList);
+        List<String> perms = StpUtil.getPermissionList();
+        loginVO.setPerms(perms);
 
         // 异步记录登录成功日志
         LogLogin logLogin = new LogLogin();
@@ -126,6 +124,6 @@ public class LoginServiceImpl implements LoginService {
         logLogin.setStatus(CommonEnum.OkOrFail.OK.getCode());
         logLogin.setCreator(StpUtil.getLoginIdAsLong());
         TaskManager.me().execute(LogRecordFactory.login(logLogin));
-        return loginSuccessVO;
+        return loginVO;
     }
 }

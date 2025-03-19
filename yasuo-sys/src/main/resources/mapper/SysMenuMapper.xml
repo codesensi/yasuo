@@ -11,6 +11,23 @@
                  LEFT JOIN sys_user u ON u.id = ur.user_id
         WHERE m.`perms` IS NOT NULL
           AND m.`perms` <![CDATA[<>]]> ''
+          AND u.`status` = 0
+          AND r.`status` = 0
+          AND m.`status` = 0
+          AND u.id = #{userId}
+    </select>
+
+    <select id="listMenuByUserId" resultType="cn.codesensi.yasuo.pojo.entity.SysMenu">
+        SELECT m.*
+        FROM sys_menu m
+                 LEFT JOIN sys_role_menu rm ON rm.menu_id = m.id
+                 LEFT JOIN sys_role r ON r.id = rm.role_id
+                 LEFT JOIN sys_user_role ur ON ur.role_id = r.id
+                 LEFT JOIN sys_user u ON u.id = ur.user_id
+        WHERE u.`status` = 0
+          AND r.`status` = 0
+          AND m.`status` = 0
+          AND m.`type` != 3
           AND u.id = #{userId}
     </select>
 </mapper>

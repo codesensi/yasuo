@@ -5,11 +5,11 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * 验证码生成结果参数
+ * 验证码生成结果
  */
 @Data
 @Accessors(chain = true)
-@Schema(name = "验证码生成结果参数", description = "验证码生成结果参数")
+@Schema(name = "验证码生成结果", description = "验证码生成结果")
 public class CaptchaVO {
 
     /**

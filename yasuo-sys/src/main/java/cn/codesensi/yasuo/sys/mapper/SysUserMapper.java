@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.mapper;
 
-import cn.codesensi.yasuo.sys.entity.SysUser;
+import cn.codesensi.yasuo.pojo.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

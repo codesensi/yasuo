@@ -1,4 +1,4 @@
-package cn.codesensi.yasuo.sys.entity;
+package cn.codesensi.yasuo.pojo.entity;
 
 import cn.codesensi.yasuo.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -53,7 +53,7 @@ public class SysUser extends BaseEntity implements Serializable {
      * 用户身份证号码
      */
     @Schema(description = "用户身份证号码")
-    private String idno;
+    private String idNo;
 
     /**
      * 用户邮箱
@@ -86,9 +86,9 @@ public class SysUser extends BaseEntity implements Serializable {
     private Integer type;
 
     /**
-     * 用户状态:0-正常,1-禁用
+     * 用户状态:0-启用,1-禁用
      */
-    @Schema(description = "用户状态:0-正常,1-禁用")
+    @Schema(description = "用户状态:0-启用,1-禁用")
     private Integer status;
 
     /**

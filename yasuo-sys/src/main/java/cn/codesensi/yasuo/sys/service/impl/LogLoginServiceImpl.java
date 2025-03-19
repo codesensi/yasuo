@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
-import cn.codesensi.yasuo.sys.entity.LogLogin;
+import cn.codesensi.yasuo.pojo.entity.LogLogin;
 import cn.codesensi.yasuo.sys.mapper.LogLoginMapper;
 import cn.codesensi.yasuo.sys.service.ILogLoginService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

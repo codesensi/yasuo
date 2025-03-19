@@ -17,6 +17,7 @@
         <module>yasuo-start</module>
         <module>yasuo-generator</module>
         <module>yasuo-sys</module>
+        <module>yasuo-task</module>
     </modules>
 
     <properties>
@@ -242,6 +243,12 @@
         </plugins>
         <!-- 配置Maven资源过滤 -->
         <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>

@@ -1,7 +1,7 @@
 package cn.codesensi.yasuo.factory;
 
-import cn.codesensi.yasuo.sys.entity.LogLogin;
-import cn.codesensi.yasuo.sys.entity.LogOperate;
+import cn.codesensi.yasuo.pojo.entity.LogLogin;
+import cn.codesensi.yasuo.pojo.entity.LogOperate;
 import cn.codesensi.yasuo.sys.service.ILogLoginService;
 import cn.codesensi.yasuo.sys.service.ILogOperateService;
 import cn.codesensi.yasuo.util.SpringUtil;

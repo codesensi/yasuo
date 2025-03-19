@@ -3,8 +3,9 @@ package cn.codesensi.yasuo.sys.controller;
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.annotation.LogOperate;
 import cn.codesensi.yasuo.base.BaseController;
-import cn.codesensi.yasuo.sys.entity.SysUser;
 import cn.codesensi.yasuo.enums.OperateType;
+import cn.codesensi.yasuo.pojo.entity.SysUser;
+import cn.codesensi.yasuo.pojo.vo.RouteVO;
 import cn.codesensi.yasuo.sys.service.ISysUserService;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +18,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户信息表 前端控制器
@@ -110,6 +113,18 @@ public class SysUserController extends BaseController {
     @GetMapping("/detail/{id}")
     public SysUser detail(@PathVariable(name = "id") Long id) {
         return sysUserService.getById(id);
+    }
+
+    /**
+     * 获取当前用户的路由菜单树
+     *
+     * @return List<RouteVO> 路由菜单树
+     */
+    @ApiOperationSupport(order = 6)
+    @Operation(summary = "获取当前用户的路由菜单树")
+    @GetMapping("/getRoutes")
+    public List<RouteVO> getRoutes() {
+        return sysUserService.getRoutes();
     }
 
 }

@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
-import cn.codesensi.yasuo.sys.entity.LogOperate;
+import cn.codesensi.yasuo.pojo.entity.LogOperate;
 import cn.codesensi.yasuo.sys.mapper.LogOperateMapper;
 import cn.codesensi.yasuo.sys.service.ILogOperateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

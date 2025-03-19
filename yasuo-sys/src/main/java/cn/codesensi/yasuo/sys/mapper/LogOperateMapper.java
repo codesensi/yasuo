@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.mapper;
 
-import cn.codesensi.yasuo.sys.entity.LogOperate;
+import cn.codesensi.yasuo.pojo.entity.LogOperate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

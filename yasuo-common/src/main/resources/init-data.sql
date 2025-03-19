@@ -2,25 +2,6 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for sys_config
--- ----------------------------
-DROP TABLE IF EXISTS `sys_config`;
-CREATE TABLE IF NOT EXISTS `sys_config`
-(
-    `id`          bigint NOT NULL COMMENT '配置ID',
-    `is_init`     tinyint(1) DEFAULT '0' COMMENT '是否初始化:0-否,1-是',
-    `creator`     bigint     DEFAULT NULL COMMENT '创建人',
-    `create_time` datetime   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`     bigint     DEFAULT NULL COMMENT '更新人',
-    `update_time` datetime   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `is_delete`   tinyint(1) DEFAULT '0' COMMENT '是否删除:0-否,1-是',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_general_ci
-  ROW_FORMAT = DYNAMIC COMMENT ='系统配置表';
-
--- ----------------------------
 -- Table structure for log_operate
 -- ----------------------------
 DROP TABLE IF EXISTS `log_operate`;
@@ -91,30 +72,34 @@ CREATE TABLE IF NOT EXISTS `log_login`
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu`
 (
-    `id`          bigint      NOT NULL COMMENT '菜单ID',
-    `name`        varchar(64) NOT NULL COMMENT '菜单名称',
-    `pid`         bigint       DEFAULT '0' COMMENT '父菜单ID',
-    `description` varchar(256) DEFAULT NULL COMMENT '菜单描述',
-    `type`        tinyint(1)   DEFAULT NULL COMMENT '菜单类型:1-目录,2-菜单,3-按钮',
-    `sort`        int          DEFAULT '0' COMMENT '菜单排序',
-    `icon`        varchar(256) DEFAULT NULL COMMENT '菜单图标',
-    `path`        varchar(512) DEFAULT NULL COMMENT '路由地址',
-    `param`       varchar(256) DEFAULT NULL COMMENT '路由参数',
-    `component`   varchar(256) DEFAULT NULL COMMENT '组件路径',
-    `perms`       varchar(64)  DEFAULT NULL COMMENT '权限编码',
-    `is_frame`    tinyint(1)   DEFAULT '0' COMMENT '是否外链:0-否,1-是',
-    `status`      tinyint(1)   DEFAULT '0' COMMENT '菜单状态:0-正常,1-禁用',
-    `remark`      varchar(512) DEFAULT NULL COMMENT '备注',
-    `creator`     bigint       DEFAULT NULL COMMENT '创建人',
-    `create_time` datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`     bigint       DEFAULT NULL COMMENT '更新人',
-    `update_time` datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `is_delete`   tinyint(1)   DEFAULT '0' COMMENT '是否删除:0-否,1-是',
+    `id`             bigint        NOT NULL COMMENT '路由菜单ID',
+    `pid`            bigint        DEFAULT '0' COMMENT '父级路由菜单ID',
+    `name`           varchar(2048) DEFAULT NULL COMMENT '路由名称(外链地址)',
+    `path`           varchar(512)  DEFAULT NULL COMMENT '路由路径',
+    `param`          varchar(256)  DEFAULT NULL COMMENT '路由参数',
+    `component`      varchar(256)  DEFAULT NULL COMMENT '组件路径',
+    `title`          varchar(256)  DEFAULT NULL COMMENT '菜单名称',
+    `type`           tinyint(1)    DEFAULT NULL COMMENT '菜单类型:1-目录,2-菜单,3-按钮',
+    `rank`           int           DEFAULT '0' COMMENT '菜单排序',
+    `icon`           varchar(256)  DEFAULT NULL COMMENT '菜单图标',
+    `perms`          varchar(64)   DEFAULT NULL COMMENT '权限编码',
+    `is_link`        tinyint(1)    DEFAULT '0' COMMENT '是否外链:0-否,1-是',
+    `is_frame`       tinyint(1)    DEFAULT '0' COMMENT '是否内嵌iframe:0-否,1-是',
+    `frame_src`      varchar(2048) DEFAULT NULL COMMENT '内嵌iframe地址',
+    `is_show`        tinyint(1)    DEFAULT '1' COMMENT '是否显示:0-否,1-是',
+    `is_show_parent` tinyint(1)    DEFAULT '1' COMMENT '是否显示父级菜单:0-否,1-是',
+    `status`         tinyint(1)    DEFAULT '0' COMMENT '菜单状态:0-启用,1-禁用',
+    `remark`         varchar(512)  DEFAULT NULL COMMENT '备注',
+    `creator`        bigint        DEFAULT NULL COMMENT '创建人',
+    `create_time`    datetime      DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`        bigint        DEFAULT NULL COMMENT '更新人',
+    `update_time`    datetime      DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `is_delete`      tinyint(1)    DEFAULT '0' COMMENT '是否删除:0-否,1-是',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci
-  ROW_FORMAT = DYNAMIC COMMENT ='菜单权限表';
+  ROW_FORMAT = DYNAMIC COMMENT ='路由菜单表';
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -128,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `sys_role`
     `pid`         bigint       DEFAULT '0' COMMENT '父角色ID',
     `description` varchar(256) DEFAULT NULL COMMENT '角色描述',
     `sort`        int          DEFAULT '0' COMMENT '角色排序',
-    `status`      tinyint(1)   DEFAULT '0' COMMENT '角色状态:0-正常,1-禁用',
+    `status`      tinyint(1)   DEFAULT '0' COMMENT '角色状态:0-启用,1-禁用',
     `remark`      varchar(512) DEFAULT NULL COMMENT '备注',
     `creator`     bigint       DEFAULT NULL COMMENT '创建人',
     `create_time` datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -171,13 +156,13 @@ CREATE TABLE IF NOT EXISTS `sys_user`
     `username`    varchar(128) NOT NULL COMMENT '用户名称',
     `password`    varchar(512) NOT NULL COMMENT '用户密码',
     `nickname`    varchar(64)  DEFAULT NULL COMMENT '用户昵称',
-    `idno`        varchar(64)  DEFAULT NULL COMMENT '用户身份证号码',
+    `id_no`        varchar(64)  DEFAULT NULL COMMENT '用户身份证号码',
     `email`       varchar(64)  DEFAULT NULL COMMENT '用户邮箱',
     `phone`       varchar(11)  DEFAULT NULL COMMENT '用户手机号码',
     `gender`      tinyint(1)   DEFAULT '0' COMMENT '用户性别:0-保密,1-男,2-女',
     `avatar`      varchar(512) DEFAULT NULL COMMENT '用户头像地址',
     `type`        tinyint(1)   DEFAULT '0' COMMENT '用户类型:0-系统用户',
-    `status`      tinyint(1)   DEFAULT '0' COMMENT '用户状态:0-正常,1-禁用',
+    `status`      tinyint(1)   DEFAULT '0' COMMENT '用户状态:0-启用,1-禁用',
     `remark`      varchar(512) DEFAULT NULL COMMENT '备注',
     `creator`     bigint       DEFAULT NULL COMMENT '创建人',
     `create_time` datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -210,19 +195,17 @@ CREATE TABLE IF NOT EXISTS `sys_user_role`
   COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC COMMENT ='用户角色关联表';
 
--- 系统配置
-INSERT INTO `sys_config` (`id`, `is_init`, `creator`, `updater`, `is_delete`) VALUES (1, 1, 1, NULL, 0);
 -- 超级管理员
-INSERT INTO `sys_user` (`id`, `username`, `password`, `nickname`, `idno`, `email`, `phone`, `gender`, `avatar`, `type`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, 'admin', '$2a$10$Gw2T4jeYpwGEDCBbBKGPTuktW84axtujvQoFhlivm.dcAMKauDXky', '超级管理员', '110105197000000001', 'admin@gmail.com', '18900000000', 0, 'https://cn.codesensi.yasuo/avatar.png', 0, 0, '超级管理员', 1, NULL, 0);
+INSERT INTO `sys_user` (`id`, `username`, `password`, `nickname`, `idno`, `email`, `phone`, `gender`, `avatar`, `type`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, 'admin', '$2a$10$Gw2T4jeYpwGEDCBbBKGPTuktW84axtujvQoFhlivm.dcAMKauDXky', '超级管理员', '110105197000000001', 'admin@gmail.com', '18900000000', 0, 'https://cn.codesensi.yasuo/avatar.png', 0, 1, '超级管理员', 1, NULL, 0);
 -- 超级管理员角色
-INSERT INTO `sys_role` (`id`, `name`, `code`, `pid`, `description`, `sort`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, '超级管理员', 'admin', 0, '超级管理员', 0, 0, '超级管理员', 1, NULL, 0);
+INSERT INTO `sys_role` (`id`, `name`, `code`, `pid`, `description`, `sort`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, '超级管理员', 'admin', 0, '超级管理员', 0, 1, '超级管理员', 1, NULL, 0);
 -- 用户角色关联
 INSERT INTO `sys_user_role` (`id`, `user_id`, `role_id`, `creator`, `updater`, `is_delete`) VALUES (1, 1, 1, 1, NULL, 0);
 -- 权限数据
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, '系统管理', 0, '系统管理', 1, 0, NULL, 'system', NULL, NULL, NULL, 0, 0, '系统管理', 1, NULL, 0);
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (101, '用户管理', 1, '用户管理', 2, 1, NULL, 'user', NULL, 'sys/user/index', 'sys:user:page', 0, 0, '用户管理', 1, NULL, 0);
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1011, '用户查询', 101, '用户查询', 3, 1, NULL, NULL, NULL, NULL, 'sys:user:detail', 0, 0, '用户查询', 1, NULL, 0);
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1012, '用户新增', 101, '用户新增', 3, 2, NULL, NULL, NULL, NULL, 'sys:user:save', 0, 0, '用户新增', 1, NULL, 0);
+INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, '系统管理', 0, '系统管理', 1, 0, NULL, 'system', NULL, NULL, NULL, 0, 1, '系统管理', 1, NULL, 0);
+INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (101, '用户管理', 1, '用户管理', 2, 1, NULL, 'user', NULL, NULL, 'sys:user:page', 0, 1, '用户管理', 1, NULL, 0);
+INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1011, '用户查询', 101, '用户查询', 3, 1, NULL, NULL, NULL, NULL, 'sys:user:detail', 0, 1, '用户查询', 1, NULL, 0);
+INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1012, '用户新增', 101, '用户新增', 3, 2, NULL, NULL, NULL, NULL, 'sys:user:save', 0, 1, '用户新增', 1, NULL, 0);
 -- 角色权限关联数据
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `creator`, `updater`, `is_delete`) VALUES (1, 1, 1, 1, NULL, 0);
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `creator`, `updater`, `is_delete`) VALUES (2, 1, 101, 1, NULL, 0);

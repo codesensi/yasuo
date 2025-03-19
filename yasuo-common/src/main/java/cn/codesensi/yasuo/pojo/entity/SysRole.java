@@ -1,4 +1,4 @@
-package cn.codesensi.yasuo.sys.entity;
+package cn.codesensi.yasuo.pojo.entity;
 
 import cn.codesensi.yasuo.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -62,9 +62,9 @@ public class SysRole extends BaseEntity implements Serializable {
     private Integer sort;
 
     /**
-     * 角色状态:0-正常,1-禁用
+     * 角色状态:0-启用,1-禁用
      */
-    @Schema(description = "角色状态:0-正常,1-禁用")
+    @Schema(description = "角色状态:0-启用,1-禁用")
     private Integer status;
 
     /**

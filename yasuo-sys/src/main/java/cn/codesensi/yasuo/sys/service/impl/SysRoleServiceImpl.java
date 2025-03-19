@@ -2,7 +2,7 @@ package cn.codesensi.yasuo.sys.service.impl;
 
 import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.constants.RbacConst;
-import cn.codesensi.yasuo.sys.entity.SysRole;
+import cn.codesensi.yasuo.pojo.entity.SysRole;
 import cn.codesensi.yasuo.sys.mapper.SysRoleMapper;
 import cn.codesensi.yasuo.sys.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,7 +23,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      * @param userId 用户ID
      * @return 角色编码列表
      */
-    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'role:' + #userId")
+    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'roles:' + #userId")
     @Override
     public List<String> listRoleCodeByUserId(Long userId) {
         // 超级管理员

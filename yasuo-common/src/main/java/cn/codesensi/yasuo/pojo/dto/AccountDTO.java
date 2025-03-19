@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @Schema(name = "账号密码登录参数", description = "账号密码登录参数")
-public class AccountUserDTO implements Serializable {
+public class AccountDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

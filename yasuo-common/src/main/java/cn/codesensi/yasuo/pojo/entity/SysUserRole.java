@@ -1,4 +1,4 @@
-package cn.codesensi.yasuo.sys.entity;
+package cn.codesensi.yasuo.pojo.entity;
 
 import cn.codesensi.yasuo.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,28 +12,34 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 系统配置表 实体类
+ * 用户角色关联表 实体类
  */
 @Data
 @Accessors(chain = true)
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_config")
-@Schema(name = "SysConfig", description = "系统配置表")
-public class SysConfig extends BaseEntity implements Serializable {
+@TableName("sys_user_role")
+@Schema(name = "SysUserRole", description = "用户角色关联表")
+public class SysUserRole extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     /**
-     * 配置ID
+     * 主键ID
      */
-    @Schema(description = "配置ID")
+    @Schema(description = "主键ID")
     private Long id;
 
     /**
-     * 是否初始化:0-否,1-是
+     * 用户ID
      */
-    @Schema(description = "是否初始化:0-否,1-是")
-    private Integer isInit;
+    @Schema(description = "用户ID")
+    private Long userId;
+
+    /**
+     * 角色ID
+     */
+    @Schema(description = "角色ID")
+    private Long roleId;
 }

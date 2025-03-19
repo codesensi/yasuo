@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.mapper;
 
-import cn.codesensi.yasuo.sys.entity.SysMenu;
+import cn.codesensi.yasuo.pojo.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
@@ -17,4 +17,12 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return 权限编码列表
      */
     List<String> listPermsByUserId(Long userId);
+
+    /**
+     * 查询用户菜单列表
+     *
+     * @param userId
+     * @return
+     */
+    List<SysMenu> listMenuByUserId(Long userId);
 }

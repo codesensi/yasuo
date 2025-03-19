@@ -2,8 +2,8 @@ package cn.codesensi.yasuo.api.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.api.service.LoginService;
-import cn.codesensi.yasuo.pojo.dto.AccountUserDTO;
-import cn.codesensi.yasuo.pojo.vo.LoginSuccessVO;
+import cn.codesensi.yasuo.pojo.dto.AccountDTO;
+import cn.codesensi.yasuo.pojo.vo.LoginVO;
 import cn.dev33.satoken.annotation.SaIgnore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,8 +35,8 @@ public class LoginController {
     @SaIgnore
     @Operation(summary = "账号密码登录")
     @PostMapping("/login/account")
-    public LoginSuccessVO loginAccount(@Validated @RequestBody AccountUserDTO accountUserDTO) {
-        return loginService.loginAccount(accountUserDTO);
+    public LoginVO loginAccount(@Validated @RequestBody AccountDTO accountDTO) {
+        return loginService.loginAccount(accountDTO);
     }
 
 }

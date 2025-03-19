@@ -10,10 +10,11 @@ public class CommonEnum {
 
     /**
      * 是/否
+     * 1-是
+     * 0-否
      */
     @Getter
     public enum YesOrNo {
-
         YES(CommonConst.ONE_INT, "是"),
         NO(CommonConst.ZERO_INT, "否"),
         ;
@@ -35,13 +36,14 @@ public class CommonEnum {
     }
 
     /**
-     * 启用/禁用
+     * 状态枚举
+     * 0-启用
+     * 1-禁用
      */
     @Getter
-    public enum EnableOrDisable {
-
-        ENABLE(CommonConst.ONE_INT, "启用"),
-        DISABLE(CommonConst.ZERO_INT, "禁用"),
+    public enum StatusEnum {
+        ENABLE(CommonConst.ZERO_INT, "启用"),
+        DISABLE(CommonConst.ONE_INT, "禁用"),
         ;
 
         /**
@@ -54,7 +56,7 @@ public class CommonEnum {
          */
         private final String message;
 
-        EnableOrDisable(Integer code, String message) {
+        StatusEnum(Integer code, String message) {
             this.code = code;
             this.message = message;
         }
@@ -62,10 +64,11 @@ public class CommonEnum {
 
     /**
      * 成功(正常)/失败(异常)
+     * 1-成功(正常)
+     * 0-失败(异常)
      */
     @Getter
     public enum OkOrFail {
-
         OK(CommonConst.ONE_INT, "成功(正常)"),
         FAIL(CommonConst.ZERO_INT, "失败(异常)"),
         ;

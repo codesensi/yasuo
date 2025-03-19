@@ -4,33 +4,18 @@ import lombok.Getter;
 
 /**
  * 请求方式
+ * GET-GET
+ * PUT-PUT
+ * POST-POST
+ * DELETE-DELETE
+ * OPTION-OPTION
  */
 @Getter
 public enum RequestMethod {
-
-    /**
-     * GET请求
-     */
     GET("GET", "GET"),
-
-    /**
-     * PUT请求
-     */
     PUT("PUT", "PUT"),
-
-    /**
-     * POST请求
-     */
     POST("POST", "POST"),
-
-    /**
-     * DELETE请求
-     */
     DELETE("DELETE", "DELETE"),
-
-    /**
-     * OPTION请求
-     */
     OPTION("OPTION", "OPTION"),
     ;
 

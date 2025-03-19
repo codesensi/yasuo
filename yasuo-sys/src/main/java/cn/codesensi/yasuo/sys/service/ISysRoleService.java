@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.service;
 
-import cn.codesensi.yasuo.sys.entity.SysRole;
+import cn.codesensi.yasuo.pojo.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

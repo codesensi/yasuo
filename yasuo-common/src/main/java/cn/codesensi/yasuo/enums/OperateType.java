@@ -4,33 +4,18 @@ import lombok.Getter;
 
 /**
  * 操作类型
+ * 0-未知
+ * 1-新增
+ * 2-更新
+ * 3-查询
+ * 4-删除
  */
 @Getter
 public enum OperateType {
-
-    /**
-     * 未知
-     */
     OTHER(0, "未知"),
-
-    /**
-     * 新增
-     */
     INSERT(1, "新增"),
-
-    /**
-     * 更新
-     */
     UPDATE(2, "更新"),
-
-    /**
-     * 查询
-     */
     QUERY(3, "查询"),
-
-    /**
-     * 删除
-     */
     DELETE(4, "删除"),
     ;
 

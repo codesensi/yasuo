@@ -4,23 +4,14 @@ import lombok.Getter;
 
 /**
  * 登录方式
+ * 0-未知
+ * 1-账号密码
+ * 2-手机验证码
  */
 @Getter
 public enum LoginMode {
-
-    /**
-     * 未知
-     */
     OTHER(0, "未知"),
-
-    /**
-     * 账号密码
-     */
     ACCOUNT(1, "账号密码"),
-
-    /**
-     * 手机验证码
-     */
     MOBILE(2, "手机验证码"),
     ;
 

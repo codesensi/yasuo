@@ -1,6 +1,5 @@
 package cn.codesensi.yasuo.pojo.vo;
 
-import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -12,15 +11,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 登录成功结果参数
+ * 登录结果
  *
  * @author codesensi
  * @since 2024/1/21 15:39
  */
 @Data
 @Accessors(chain = true)
-@Schema(name = "登录成功结果参数", description = "登录成功结果参数")
-public class LoginSuccessVO implements Serializable {
+@Schema(name = "登录结果", description = "登录结果")
+public class LoginVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -40,7 +39,7 @@ public class LoginSuccessVO implements Serializable {
     /**
      * 刷新token
      */
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN, timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+8")
     @Schema(description = "过期时间")
     private LocalDateTime expireTime;
 
@@ -72,5 +71,5 @@ public class LoginSuccessVO implements Serializable {
      * 权限
      */
     @Schema(description = "权限")
-    private List<String> permissions;
+    private List<String> perms;
 }

@@ -6,9 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
-@EnableScheduling
 @EnableCaching
 @MapperScan("cn.codesensi.yasuo.**.mapper")
 @SpringBootApplication

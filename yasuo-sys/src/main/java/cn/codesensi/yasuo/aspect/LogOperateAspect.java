@@ -1,7 +1,6 @@
 package cn.codesensi.yasuo.aspect;
 
 import cn.codesensi.yasuo.annotation.LogOperate;
-import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.enums.CommonEnum;
 import cn.codesensi.yasuo.factory.LogRecordFactory;
 import cn.codesensi.yasuo.ext.TaskManager;
@@ -94,7 +93,7 @@ public class LogOperateAspect {
                 String requestMethod = StrUtil.join(".", signature.getDeclaringTypeName(), signature.getName());
                 String requestMode = request.getMethod();
 
-                cn.codesensi.yasuo.sys.entity.LogOperate logOperate = new cn.codesensi.yasuo.sys.entity.LogOperate();
+                cn.codesensi.yasuo.pojo.entity.LogOperate logOperate = new cn.codesensi.yasuo.pojo.entity.LogOperate();
                 // 获取注解信息
                 LogOperate annotationLogOperate = getAnnotationLog(joinPoint);
                 Optional.ofNullable(annotationLogOperate).ifPresent(l -> {

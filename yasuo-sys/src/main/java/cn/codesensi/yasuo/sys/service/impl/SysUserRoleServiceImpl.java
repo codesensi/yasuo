@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
-import cn.codesensi.yasuo.sys.entity.SysUserRole;
+import cn.codesensi.yasuo.pojo.entity.SysUserRole;
 import cn.codesensi.yasuo.sys.mapper.SysUserRoleMapper;
 import cn.codesensi.yasuo.sys.service.ISysUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

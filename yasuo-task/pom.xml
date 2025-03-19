@@ -10,8 +10,8 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>yasuo-sys</artifactId>
-    <description>系统管理模块</description>
+    <artifactId>yasuo-task</artifactId>
+    <description>定时任务模块</description>
 
     <dependencies>
         <dependency>

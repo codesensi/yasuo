@@ -2,7 +2,7 @@ package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.base.BaseController;
-import cn.codesensi.yasuo.sys.entity.LogOperate;
+import cn.codesensi.yasuo.pojo.entity.LogOperate;
 import cn.codesensi.yasuo.sys.service.ILogOperateService;
 import cn.hutool.core.util.ObjUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

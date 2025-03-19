@@ -1,4 +1,4 @@
-package cn.codesensi.yasuo.sys.entity;
+package cn.codesensi.yasuo.pojo.entity;
 
 import cn.codesensi.yasuo.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;

@@ -48,7 +48,7 @@ public class BaseEntity implements Serializable {
     private LocalDateTime updateTime;
 
     /**
-     * 删除标识:0-未删除,1-已删除`
+     * 是否删除:0-否,1-是
      */
     @Schema(name = "isDelete", description = "是否删除:0-否,1-是")
     private Integer isDelete;
