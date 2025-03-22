@@ -1,13 +1,11 @@
 package cn.codesensi.yasuo.pojo.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,23 +23,22 @@ public class LoginVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 认证token
+     * accessToken
      */
-    @Schema(description = "认证token")
+    @Schema(description = "accessToken")
     private String accessToken;
 
     /**
-     * 刷新token
+     * refreshToken
      */
-    @Schema(description = "刷新token")
+    @Schema(description = "refreshToken")
     private String refreshToken;
 
     /**
-     * 刷新token
+     * accessToken过期时间（毫秒值）
      */
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+8")
-    @Schema(description = "过期时间")
-    private LocalDateTime expireTime;
+    @Schema(description = "accessToken过期时间（毫秒值）")
+    private Long expires;
 
     /**
      * 用户名
@@ -71,5 +68,5 @@ public class LoginVO implements Serializable {
      * 权限
      */
     @Schema(description = "权限")
-    private List<String> perms;
+    private List<String> permissions;
 }

@@ -14,8 +14,14 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 获取当前用户的菜单列表
      *
-     * @return
+     * @return 路由菜单树
      */
     List<RouteVO> getRoutes();
 
+    /**
+     * 获取当前用户信息
+     *
+     * @return 用户信息
+     */
+    SysUser getMine();
 }

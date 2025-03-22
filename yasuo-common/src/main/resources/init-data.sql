@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `log_login`
     `id`          bigint NOT NULL COMMENT '日志ID',
     `type`        tinyint(1)    DEFAULT NULL COMMENT '登录类型:0-未知,1-登录,2-登出',
     `mode`        tinyint(1)    DEFAULT NULL COMMENT '登录方式:0-未知,1-账号密码,2-手机验证码',
-    `login_time`  datetime      DEFAULT NULL COMMENT '登录时间',
     `ip`          varchar(64)   DEFAULT NULL COMMENT '登录IP',
     `area`        varchar(256)  DEFAULT NULL COMMENT '登录地区',
     `os`          varchar(256)  DEFAULT NULL COMMENT '登录系统',
@@ -194,22 +193,5 @@ CREATE TABLE IF NOT EXISTS `sys_user_role`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci
   ROW_FORMAT = DYNAMIC COMMENT ='用户角色关联表';
-
--- 超级管理员
-INSERT INTO `sys_user` (`id`, `username`, `password`, `nickname`, `idno`, `email`, `phone`, `gender`, `avatar`, `type`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, 'admin', '$2a$10$Gw2T4jeYpwGEDCBbBKGPTuktW84axtujvQoFhlivm.dcAMKauDXky', '超级管理员', '110105197000000001', 'admin@gmail.com', '18900000000', 0, 'https://cn.codesensi.yasuo/avatar.png', 0, 1, '超级管理员', 1, NULL, 0);
--- 超级管理员角色
-INSERT INTO `sys_role` (`id`, `name`, `code`, `pid`, `description`, `sort`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, '超级管理员', 'admin', 0, '超级管理员', 0, 1, '超级管理员', 1, NULL, 0);
--- 用户角色关联
-INSERT INTO `sys_user_role` (`id`, `user_id`, `role_id`, `creator`, `updater`, `is_delete`) VALUES (1, 1, 1, 1, NULL, 0);
--- 权限数据
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, '系统管理', 0, '系统管理', 1, 0, NULL, 'system', NULL, NULL, NULL, 0, 1, '系统管理', 1, NULL, 0);
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (101, '用户管理', 1, '用户管理', 2, 1, NULL, 'user', NULL, NULL, 'sys:user:page', 0, 1, '用户管理', 1, NULL, 0);
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1011, '用户查询', 101, '用户查询', 3, 1, NULL, NULL, NULL, NULL, 'sys:user:detail', 0, 1, '用户查询', 1, NULL, 0);
-INSERT INTO `sys_menu` (`id`, `name`, `pid`, `description`, `type`, `sort`, `icon`, `path`, `param`, `component`, `perms`, `is_frame`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1012, '用户新增', 101, '用户新增', 3, 2, NULL, NULL, NULL, NULL, 'sys:user:save', 0, 1, '用户新增', 1, NULL, 0);
--- 角色权限关联数据
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `creator`, `updater`, `is_delete`) VALUES (1, 1, 1, 1, NULL, 0);
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `creator`, `updater`, `is_delete`) VALUES (2, 1, 101, 1, NULL, 0);
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `creator`, `updater`, `is_delete`) VALUES (3, 1, 1011, 1, NULL, 0);
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `creator`, `updater`, `is_delete`) VALUES (4, 1, 1012, 1,  NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

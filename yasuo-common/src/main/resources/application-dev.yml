@@ -1,3 +1,19 @@
+# 自定义配置
+custom:
+  # 安全配置
+  secure:
+    # 演示模式开关
+    demo-mode: false
+    # 跳过鉴权开关
+    skip-auth: true
+  # 验证码配置
+  captcha:
+    enabled: false
+    # 验证码类型
+    type: image
+    # 图形验证码类型，验证码类型为图形时需配置
+    image-type: arithmetic
+
 # knife4j增强配置
 knife4j:
   # 是否开启生产环境保护策略
@@ -83,18 +99,3 @@ thread:
 decorator:
   datasource:
     enabled: true
-
-# 验证码
-captcha:
-  enabled: false
-  # 验证码类型
-  type: image
-  # 图形验证码类型，验证码类型为图形时需配置
-  image-type: arithmetic
-
-# 安全相关配置
-secure:
-  # 演示模式开关
-  demo-mode: false
-  # 跳过鉴权开关
-  skip-auth: true

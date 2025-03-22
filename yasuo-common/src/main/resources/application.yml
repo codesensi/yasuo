@@ -1,13 +1,23 @@
-# 项目相关配置
-yasuo:
-  # 名称
-  name: 疾风后台管理系统
-  # 版本
-  version: @project.version@
-  # 负责人
-  author: codesensi
-  # 版权
-  copyright: 2025
+# 自定义配置
+custom:
+  # 项目相关配置
+  project:
+    # 名称
+    name: 疾风后台管理系统
+    # 版本
+    version: @project.version@
+    # 负责人
+    author: codesensi
+    # 版权
+    copyright: 2025
+  # 安全相关配置
+  secure:
+    # refresh-token过期时间（单位：秒）
+    refresh-token-timeout: 2592000
+  # 缓存相关配置
+  cache:
+    # redis默认过期时间（单位：秒）
+    redis-default-expires-time: 2592000
 
 server:
   port: 8080
@@ -106,8 +116,3 @@ mica:
     mode: escape
     path-patterns: /**
     path-exclude-patterns:
-
-# 安全相关配置
-secure:
-  # refresh-token过期时间（单位：秒）
-  refresh-token-timeout: 2592000

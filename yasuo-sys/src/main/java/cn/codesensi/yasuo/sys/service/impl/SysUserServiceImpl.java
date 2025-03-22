@@ -1,6 +1,5 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
-import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.pojo.entity.SysUser;
 import cn.codesensi.yasuo.pojo.vo.RouteVO;
 import cn.codesensi.yasuo.sys.mapper.SysUserMapper;
@@ -10,7 +9,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +31,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public List<RouteVO> getRoutes() {
         return sysMenuService.getRoutesByUserId(StpUtil.getLoginIdAsLong());
+    }
+
+    /**
+     * 获取当前用户信息
+     *
+     * @return 用户信息
+     */
+    @Override
+    public SysUser getMine() {
+        long userId = StpUtil.getLoginIdAsLong();
+        return baseMapper.selectById(userId);
     }
 }

@@ -127,4 +127,16 @@ public class SysUserController extends BaseController {
         return sysUserService.getRoutes();
     }
 
+    /**
+     * 获取当前用户信息
+     *
+     * @return SysUser 用户信息
+     */
+    @ApiOperationSupport(order = 7)
+    @Operation(summary = "获取当前用户信息")
+    @GetMapping("/getMine")
+    public SysUser getMine() {
+        return sysUserService.getMine();
+    }
+
 }

@@ -20,7 +20,7 @@ public class YasuoStartApplication {
 
         // 获取配置属性
         String serverPort = env.getProperty("server.port");
-        String version = env.getProperty("yasuo.version");
+        String version = env.getProperty("custom.project.version");
 
         // 打印配置信息
         System.out.println("""

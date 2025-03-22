@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.config;
 
-import cn.codesensi.yasuo.properties.YasuoProperties;
+import cn.codesensi.yasuo.properties.CustomProperties;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -15,16 +15,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Knife4jConfig {
 
-    private final YasuoProperties yasuoProperties;
+    private final CustomProperties customProperties;
 
     @Bean
     public OpenAPI openApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title(yasuoProperties.getName())
-                        .description(yasuoProperties.getName() + "文档")
-                        .contact(new Contact().name(yasuoProperties.getAuthor()))
-                        .version("v" + yasuoProperties.getVersion())
+                        .title(customProperties.getProject().getName())
+                        .description(customProperties.getProject().getName() + "文档")
+                        .contact(new Contact().name(customProperties.getProject().getAuthor()))
+                        .version("v" + customProperties.getProject().getVersion())
                 );
     }
 }

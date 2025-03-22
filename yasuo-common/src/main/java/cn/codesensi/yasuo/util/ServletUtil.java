@@ -43,7 +43,14 @@ public class ServletUtil {
      * 获取浏览器UA
      */
     public static String getUserAgent() {
-        return getRequest().getHeader(USER_AGENT_KEY);
+        return getUserAgent(getRequestAttributes().getRequest());
+    }
+
+    /**
+     * 获取浏览器UA
+     */
+    public static String getUserAgent(HttpServletRequest request) {
+        return request.getHeader(USER_AGENT_KEY);
     }
 
     /**
