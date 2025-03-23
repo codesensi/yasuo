@@ -41,10 +41,10 @@ public class MetaVO implements Serializable {
 
     /**
      * 菜单排序
-     * 值越高排的越后（只针对顶级路由）
+     * 值越高排的越后
      */
     @Schema(description = "菜单排序")
-    private Integer rank;
+    private Integer sort;
 
     /**
      * 是否显示父级菜单

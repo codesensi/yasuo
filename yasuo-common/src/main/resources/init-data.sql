@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu`
     `component`      varchar(256)  DEFAULT NULL COMMENT '组件路径',
     `title`          varchar(256)  DEFAULT NULL COMMENT '菜单名称',
     `type`           tinyint(1)    DEFAULT NULL COMMENT '菜单类型:1-目录,2-菜单,3-按钮',
-    `rank`           int           DEFAULT '0' COMMENT '菜单排序',
+    `sort`           int           DEFAULT '0' COMMENT '菜单排序',
     `icon`           varchar(256)  DEFAULT NULL COMMENT '菜单图标',
     `perms`          varchar(64)   DEFAULT NULL COMMENT '权限编码',
     `is_link`        tinyint(1)    DEFAULT '0' COMMENT '是否外链:0-否,1-是',

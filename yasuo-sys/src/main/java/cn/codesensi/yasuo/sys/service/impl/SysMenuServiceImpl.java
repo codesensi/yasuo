@@ -67,10 +67,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 获取根节点（pid = 0）
         List<SysMenu> rootMenus = menuGroupByPid.getOrDefault(0L, new ArrayList<>());
 
-        // 构建树结构,按 rank 排序
+        // 构建树结构,按 sort 排序
         return rootMenus.stream()
                 .map(menu -> buildRouteVO(menu, menuGroupByPid))
-                .sorted(Comparator.comparingInt(route -> route.getMeta().getRank())) // 按 rank 排序
+                .sorted(Comparator.comparingInt(route -> route.getMeta().getSort())) // 按 sort 排序
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +92,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         metaVO.setTitle(menu.getTitle());
         metaVO.setIcon(menu.getIcon());
         metaVO.setShowLink(CommonEnum.YesOrNo.YES.getCode().equals(menu.getIsShow()));
-        metaVO.setRank(menu.getRank());
+        metaVO.setSort(menu.getSort());
         metaVO.setShowParent(CommonEnum.YesOrNo.YES.getCode().equals(menu.getIsShowParent()));
         metaVO.setFrameSrc(menu.getFrameSrc());
         routeVO.setMeta(metaVO);
@@ -102,7 +102,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (!childrenMenus.isEmpty()) {
             List<RouteVO> children = childrenMenus.stream()
                     .map(childMenu -> buildRouteVO(childMenu, menuGroupByPid))
-                    .sorted(Comparator.comparingInt(route -> route.getMeta().getRank())) // 按 rank 排序
+                    .sorted(Comparator.comparingInt(route -> route.getMeta().getSort())) // 按 sort 排序
                     .collect(Collectors.toList());
             routeVO.setChildren(children);
         }

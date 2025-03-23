@@ -19,7 +19,7 @@ class YasuoSysTests {
      */
     @Test
     public void getPassword() {
-        String inputPw = "admin@2025";
+        String inputPw = "admin@000";
         // BCrypt加密生成密码
         String pw = BCrypt.hashpw(inputPw, BCrypt.gensalt());
         log.info("生成的密码：{}", pw);

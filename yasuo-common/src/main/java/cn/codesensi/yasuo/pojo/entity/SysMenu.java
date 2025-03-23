@@ -77,7 +77,7 @@ public class SysMenu extends BaseEntity implements Serializable {
      * 菜单排序
      */
     @Schema(description = "菜单排序")
-    private Integer rank;
+    private Integer sort;
 
     /**
      * 菜单图标
