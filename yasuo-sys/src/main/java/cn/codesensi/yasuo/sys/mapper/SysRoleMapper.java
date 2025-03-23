@@ -2,6 +2,7 @@ package cn.codesensi.yasuo.sys.mapper;
 
 import cn.codesensi.yasuo.pojo.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param userId 用户ID
      * @return 角色编码列表
      */
-    List<String> listRoleCodeByUserId(Long userId);
+    List<String> listRoleByUserId(@Param("userId") Long userId);
 }

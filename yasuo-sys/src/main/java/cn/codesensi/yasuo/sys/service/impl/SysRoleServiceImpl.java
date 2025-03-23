@@ -25,11 +25,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      */
     @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'roles:' + #userId")
     @Override
-    public List<String> listRoleCodeByUserId(Long userId) {
+    public List<String> listRoleByUserId(Long userId) {
         // 超级管理员
         if (RbacConst.ADMIN_ID.equals(userId)) {
             return List.of(RbacConst.ROLE_ADMIN_CODE);
         }
-        return baseMapper.listRoleCodeByUserId(userId);
+        return baseMapper.listRoleByUserId(userId);
     }
 }

@@ -27,7 +27,7 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        return sysMenuService.listPermsByUserId(Long.valueOf(String.valueOf(loginId)));
+        return sysMenuService.listPermByUserId(Long.valueOf(String.valueOf(loginId)));
     }
 
     /**
@@ -39,7 +39,7 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        return sysRoleService.listRoleCodeByUserId(Long.valueOf(String.valueOf(loginId)));
+        return sysRoleService.listRoleByUserId(Long.valueOf(String.valueOf(loginId)));
     }
 
 }

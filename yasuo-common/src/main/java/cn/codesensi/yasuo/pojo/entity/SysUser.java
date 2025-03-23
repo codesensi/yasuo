@@ -1,6 +1,7 @@
 package cn.codesensi.yasuo.pojo.entity;
 
 import cn.codesensi.yasuo.base.BaseEntity;
+import cn.codesensi.yasuo.constants.RbacConst;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -96,4 +97,13 @@ public class SysUser extends BaseEntity implements Serializable {
      */
     @Schema(description = "备注")
     private String remark;
+
+    /**
+     * 是否超级管理员
+     *
+     * @return
+     */
+    public Boolean isAdmin() {
+        return RbacConst.ADMIN_ID.equals(id);
+    }
 }

@@ -32,12 +32,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      */
     @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'perms:' + #userId")
     @Override
-    public List<String> listPermsByUserId(Long userId) {
+    public List<String> listPermByUserId(Long userId) {
         // 超级管理员
         if (RbacConst.ADMIN_ID.equals(userId)) {
             return List.of(RbacConst.PERM_ADMIN_CODE);
         }
-        return baseMapper.listPermsByUserId(userId);
+        return baseMapper.listPermByUserId(userId);
     }
 
     /**
@@ -49,6 +49,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'routes:' + #userId")
     @Override
     public List<RouteVO> getRoutesByUserId(Long userId) {
+        // 超级管理员可查看所有菜单
+        if (RbacConst.ADMIN_ID.equals(userId)) {
+            userId = null;
+        }
         List<SysMenu> menus = baseMapper.listMenuByUserId(userId);
         return buildRoutesTree(menus);
     }

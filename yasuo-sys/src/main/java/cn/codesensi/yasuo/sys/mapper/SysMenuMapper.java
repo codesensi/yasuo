@@ -2,6 +2,7 @@ package cn.codesensi.yasuo.sys.mapper;
 
 import cn.codesensi.yasuo.pojo.entity.SysMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @param userId 用户ID
      * @return 权限编码列表
      */
-    List<String> listPermsByUserId(Long userId);
+    List<String> listPermByUserId(@Param("userId") Long userId);
 
     /**
      * 查询用户菜单列表
@@ -24,5 +25,5 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @param userId
      * @return
      */
-    List<SysMenu> listMenuByUserId(Long userId);
+    List<SysMenu> listMenuByUserId(@Param("userId") Long userId);
 }
