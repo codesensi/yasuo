@@ -37,6 +37,9 @@ public class SaTokenConfig implements WebMvcConfigurer {
             registry.addInterceptor(new SaInterceptor(handler -> {
                 // 登录校验
                 SaRouter.match(RbacConst.ROOT_PATH).notMatch(RbacConst.SWAGGER_PATH).check(r -> StpUtil.checkLogin());
+                // 封禁校验
+                long userId = StpUtil.getLoginIdAsLong();
+                SaRouter.match(RbacConst.ROOT_PATH).notMatch(RbacConst.SWAGGER_PATH).check(r -> StpUtil.checkDisable(userId));
                 // 系统功能：超级管理员角色
                 SaRouter.match(RbacConst.SYS_PATH).check(r -> StpUtil.checkRole(RbacConst.ROLE_ADMIN_CODE));
             })).addPathPatterns(RbacConst.ROOT_PATH);

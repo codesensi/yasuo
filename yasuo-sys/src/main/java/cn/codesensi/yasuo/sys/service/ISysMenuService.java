@@ -17,7 +17,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param userId 用户ID
      * @return 权限编码列表
      */
-    List<String> listPermByUserId(Long userId);
+    List<String> listPermsCodeByUserId(Long userId);
 
     /**
      * 查询用户路由菜单树

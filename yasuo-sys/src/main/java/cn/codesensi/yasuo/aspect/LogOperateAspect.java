@@ -133,19 +133,19 @@ public class LogOperateAspect {
                 logOperate.setResponseStatus(CommonEnum.OkOrFail.OK.getCode());
                 logOperate.setResponseTime(LocalDateTime.now());
                 logOperate.setResponseConsume(System.currentTimeMillis() - TIME_THREADLOCAL.get());
-                log.info("|--请求来源：{}", logOperate.getRequestIp());
-                log.info("|--请求接口：{}", logOperate.getRequestUrl());
-                log.info("|--请求方法：{}", logOperate.getRequestMethod());
-                log.info("|--请求参数：{}", logOperate.getRequestParam());
+                log.info("|-----请求来源：{}", logOperate.getRequestIp());
+                log.info("|-----请求接口：{}", logOperate.getRequestUrl());
+                log.info("|-----请求方法：{}", logOperate.getRequestMethod());
+                log.info("|-----请求参数：{}", logOperate.getRequestParam());
                 // 异常相关字段
                 if (ObjUtil.isNotNull(throwable)) {
                     logOperate.setResponseStatus(CommonEnum.OkOrFail.FAIL.getCode());
                     logOperate.setErrorTime(LocalDateTime.now());
                     logOperate.setErrorMessage(throwable.getMessage());
-                    log.error("|--异常原因：{}", logOperate.getErrorMessage());
+                    log.error("|-----异常原因：{}", logOperate.getErrorMessage());
                 }
-                log.info("|--请求返回：{}", logOperate.getResponseData());
-                log.info("|--请求耗时：{}ms", logOperate.getResponseConsume());
+                log.info("|-----请求返回：{}", logOperate.getResponseData());
+                log.info("|-----请求耗时：{}ms", logOperate.getResponseConsume());
                 if (StpUtil.isLogin()) {
                     logOperate.setCreator(StpUtil.getLoginIdAsLong());
                 }

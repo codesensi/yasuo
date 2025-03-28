@@ -34,8 +34,11 @@ class YasuoSysTests {
     @Test
     public void getId() {
         // 生成id
-        long id = IdUtil.getSnowflakeNextId();
-        log.info("生成的id：{}", id);
+        for (int i = 0; i < 20; i++) {
+            long id = IdUtil.getSnowflakeNextId();
+            log.info("生成的id：{}", id);
+        }
+
     }
 
 }

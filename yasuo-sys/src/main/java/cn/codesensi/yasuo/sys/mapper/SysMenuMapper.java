@@ -12,18 +12,18 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
-     * 返回一个账号所拥有的权限编码列表
+     * 查询角色所属的权限码
      *
-     * @param userId 用户ID
-     * @return 权限编码列表
+     * @param roles 角色码列表
+     * @return 权限码列表
      */
-    List<String> listPermByUserId(@Param("userId") Long userId);
+    List<SysMenu> listMenuPermsByRoles(@Param("roles") List<String> roles);
 
     /**
-     * 查询用户菜单列表
+     * 查询角色所属的路由菜单
      *
-     * @param userId
-     * @return
+     * @param roles 角色码列表
+     * @return 路由菜单列表
      */
-    List<SysMenu> listMenuByUserId(@Param("userId") Long userId);
+    List<SysMenu> listMenuByRoles(@Param("roles") List<String> roles);
 }

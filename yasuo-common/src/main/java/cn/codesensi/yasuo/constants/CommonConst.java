@@ -6,14 +6,24 @@ package cn.codesensi.yasuo.constants;
 public class CommonConst {
 
     /**
-     * 数字0
+     * Integer数字0
      */
     public static final Integer ZERO_INT = 0;
 
     /**
-     * 数字1
+     * Integer数字1
      */
     public static final Integer ONE_INT = 1;
+
+    /**
+     * Long数字0
+     */
+    public static final Long ZERO_LONG = 0L;
+
+    /**
+     * Long数字1
+     */
+    public static final Long ONE_LONG = 1L;
 
     /**
      * 字符串0

@@ -1,18 +1,23 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
 import cn.codesensi.yasuo.constants.CacheConst;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.constants.RbacConst;
 import cn.codesensi.yasuo.enums.CommonEnum;
 import cn.codesensi.yasuo.pojo.entity.SysMenu;
+import cn.codesensi.yasuo.pojo.entity.SysRole;
 import cn.codesensi.yasuo.pojo.vo.MetaVO;
 import cn.codesensi.yasuo.pojo.vo.RouteVO;
 import cn.codesensi.yasuo.sys.mapper.SysMenuMapper;
 import cn.codesensi.yasuo.sys.service.ISysMenuService;
+import cn.codesensi.yasuo.sys.service.ISysRoleService;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +26,11 @@ import java.util.stream.Collectors;
 /**
  * 菜单权限表 服务实现类
  */
+@RequiredArgsConstructor
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
+
+    private final ISysRoleService sysRoleService;
 
     /**
      * 返回一个账号所拥有的权限编码列表
@@ -32,12 +40,26 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      */
     @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'perms:' + #userId")
     @Override
-    public List<String> listPermByUserId(Long userId) {
-        // 超级管理员
-        if (RbacConst.ADMIN_ID.equals(userId)) {
+    public List<String> listPermsCodeByUserId(Long userId) {
+        // 获取去重后的角色列表
+        List<SysRole> sysRoles = sysRoleService.listRoleByUserId(userId);
+        // 获取角色编码列表
+        List<String> roleCodeList = sysRoles.stream()
+                .map(SysRole::getCode)
+                .filter(StrUtil::isNotBlank)
+                .toList();
+        // 超级管理员角色的权限码
+        if (roleCodeList.contains(RbacConst.ROLE_ADMIN_CODE)) {
             return List.of(RbacConst.PERM_ADMIN_CODE);
         }
-        return baseMapper.listPermByUserId(userId);
+        // 获取角色拥有的权限码列表
+        List<SysMenu> sysMenus = baseMapper.listMenuPermsByRoles(roleCodeList);
+        // 获取去重后的权限码
+        return sysMenus.stream()
+                .map(SysMenu::getPerms)
+                .filter(StrUtil::isNotBlank)
+                .distinct()
+                .toList();
     }
 
     /**
@@ -49,11 +71,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'routes:' + #userId")
     @Override
     public List<RouteVO> getRoutesByUserId(Long userId) {
-        // 超级管理员可查看所有菜单
-        if (RbacConst.ADMIN_ID.equals(userId)) {
-            userId = null;
+        // 获取用户的角色编码列表
+        List<String> roles = sysRoleService.listRoleCodeByUserId(userId);
+        if (CollUtil.isEmpty(roles)) {
+            return List.of();
         }
-        List<SysMenu> menus = baseMapper.listMenuByUserId(userId);
+        // 获取角色拥有的路由菜单列表（不包含按钮级别）
+        List<SysMenu> menus = baseMapper.listMenuByRoles(roles);
         return buildRoutesTree(menus);
     }
 
@@ -69,7 +93,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 .collect(Collectors.groupingBy(SysMenu::getPid));
 
         // 获取根节点（pid = 0）
-        List<SysMenu> rootMenus = menuGroupByPid.getOrDefault(0L, new ArrayList<>());
+        List<SysMenu> rootMenus = menuGroupByPid.getOrDefault(CommonConst.ZERO_LONG, List.of());
 
         // 构建树结构,按 sort 排序
         return rootMenus.stream()
@@ -102,7 +126,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         routeVO.setMeta(metaVO);
 
         // 递归构建子节点
-        List<SysMenu> childrenMenus = menuGroupByPid.getOrDefault(menu.getId(), new ArrayList<>());
+        List<SysMenu> childrenMenus = menuGroupByPid.getOrDefault(menu.getId(), List.of());
         if (!childrenMenus.isEmpty()) {
             List<RouteVO> children = childrenMenus.stream()
                     .map(childMenu -> buildRouteVO(childMenu, menuGroupByPid))

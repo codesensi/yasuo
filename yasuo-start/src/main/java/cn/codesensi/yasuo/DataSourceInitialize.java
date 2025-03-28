@@ -81,10 +81,10 @@ public class DataSourceInitialize {
              Statement statement = connection.createStatement()) {
             ResultSet tableResult = statement.executeQuery("SELECT table_name FROM information_schema.TABLES WHERE table_name = 'sys_user' AND table_schema = '" + databaseName + "'");
             if (tableResult.next()) {
-                log.info("|-----[数据初始化]初始数据已存在，无需初始化-----|");
+                log.info("|-----[数据初始化]初始数据已存在，无需初始化");
                 return Boolean.FALSE;
             } else {
-                log.warn("|-----[数据初始化]初始数据不存在，开始初始化数据-----|");
+                log.warn("|-----[数据初始化]初始数据不存在，开始初始化数据");
                 return Boolean.TRUE;
             }
         } catch (Exception e) {
@@ -102,12 +102,12 @@ public class DataSourceInitialize {
             // 查询数据库
             ResultSet databaseResult = statement.executeQuery("SELECT schema_name FROM information_schema.schemata WHERE schema_name = '" + databaseName + "'");
             if (databaseResult.next()) {
-                log.info("|-----[数据初始化]数据库已存在，无需创建-----|");
+                log.info("|-----[数据初始化]数据库已存在，无需创建");
             } else {
                 // 创建数据库
-                log.warn("|-----[数据初始化]数据库不存在，开始创建数据库-----|");
+                log.warn("|-----[数据初始化]数据库不存在，开始创建数据库");
                 statement.execute("CREATE DATABASE IF NOT EXISTS `" + databaseName + "` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
-                log.info("|-----[数据初始化]创建数据库完成-----|");
+                log.info("|-----[数据初始化]创建数据库完成");
             }
         } catch (Exception e) {
             log.error("[数据初始化]创建数据库失败！原因是：{}", e.getMessage(), e);

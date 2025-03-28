@@ -16,5 +16,14 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param userId 用户ID
      * @return 角色编码列表
      */
-    List<String> listRoleByUserId(Long userId);
+    List<String> listRoleCodeByUserId(Long userId);
+
+    /**
+     * 返回一个账号所拥有的角色列表
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    List<SysRole> listRoleByUserId(Long userId);
+
 }

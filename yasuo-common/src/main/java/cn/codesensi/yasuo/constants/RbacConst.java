@@ -6,9 +6,9 @@ package cn.codesensi.yasuo.constants;
 public class RbacConst {
 
     /**
-     * 超级管理员id
+     * 超级管理员名称
      */
-    public static final Long ADMIN_ID = 1L;
+    public static final String USER_ADMIN_NAME = "admin";
 
     /**
      * 超级管理员角色标识
