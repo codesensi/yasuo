@@ -216,7 +216,7 @@ CREATE TABLE `sys_user`
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` (`id`, `username`, `password`, `nickname`, `id_no`, `email`, `phone`, `gender`, `avatar`, `type`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, 'admin', '$2a$10$dw6y693PtRDktZluumVcH.XPQyHxWVZf35dszMFk3GLrASVdGJeNG', '超级管理员', '110105197000000000', 'admin@yasuo.com', '18900000000', 0, 'https://lsky.codesensi.cn:1443/i/2024/02/06/65c242e1493f8.png', 0, 0, '超级管理员', 1, NULL, 0);
+INSERT INTO `sys_user` (`id`, `username`, `password`, `nickname`, `id_no`, `email`, `phone`, `gender`, `avatar`, `type`, `status`, `remark`, `creator`, `updater`, `is_delete`) VALUES (1, 'admin', '$2a$10$dw6y693PtRDktZluumVcH.XPQyHxWVZf35dszMFk3GLrASVdGJeNG', '超级管理员', '110105197000000000', 'admin@yasuo.com', '18900000000', 0, 'https://lsky.codesensi.cn:1443/i/2025/03/31/67ea55c3702a7.png', 0, 0, '超级管理员', 1, NULL, 0);
 
 
 -- ----------------------------
