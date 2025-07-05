@@ -7,7 +7,7 @@ import cn.codesensi.yasuo.enums.OperateType;
 import cn.codesensi.yasuo.pojo.entity.SysUser;
 import cn.codesensi.yasuo.pojo.vo.RouteVO;
 import cn.codesensi.yasuo.sys.service.ISysUserService;
-import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -94,9 +95,8 @@ public class SysUserController extends BaseController {
                               @ParameterObject SysUser sysUser) {
         Page<SysUser> page = new Page<>(current, size);
         return sysUserService.lambdaQuery()
-                // TODO 组织条件
-                .eq(ObjUtil.isNotNull(sysUser.getId()), SysUser::getId, sysUser.getId())
-                .orderByDesc(SysUser::getCreateTime)
+                .like(StrUtil.isNotBlank(sysUser.getUsername()), SysUser::getUsername, sysUser.getUsername())
+                .orderByDesc(Arrays.asList(SysUser::getCreateTime, SysUser::getId))
                 .page(page);
     }
 
