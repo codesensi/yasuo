@@ -11,13 +11,18 @@
     </parent>
 
     <artifactId>yasuo-sys</artifactId>
-    <description>系统管理模板</description>
+    <description>系统管理模块</description>
 
     <dependencies>
         <dependency>
             <groupId>cn.codesensi</groupId>
             <artifactId>yasuo-common</artifactId>
             <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

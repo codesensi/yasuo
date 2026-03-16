@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.service;
 
-import cn.codesensi.yasuo.sys.entity.SysRole;
+import cn.codesensi.yasuo.pojo.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -17,4 +17,13 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return 角色编码列表
      */
     List<String> listRoleCodeByUserId(Long userId);
+
+    /**
+     * 返回一个账号所拥有的角色列表
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
+    List<SysRole> listRoleByUserId(Long userId);
+
 }

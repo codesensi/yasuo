@@ -4,6 +4,8 @@ import lombok.Getter;
 
 /**
  * 验证码策略类型
+ * sms-smsCaptchaStrategy-短信验证码
+ * image-imageCaptchaStrategy-图形验证码
  */
 @Getter
 public enum CaptchaStrategyType {

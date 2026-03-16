@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.util;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import org.slf4j.MDC;
@@ -17,10 +17,10 @@ public class ThreadPoolMDCUtil {
      * 设置traceId
      */
     public static void setTraceId() {
-        if (StrUtil.isNotBlank(MDC.get(Constant.TRACE_ID))) {
-            MDC.put(Constant.TRACE_ID, MDC.get(Constant.TRACE_ID));
+        if (StrUtil.isNotBlank(MDC.get(CommonConst.TRACE_ID))) {
+            MDC.put(CommonConst.TRACE_ID, MDC.get(CommonConst.TRACE_ID));
         } else {
-            MDC.put(Constant.TRACE_ID, IdUtil.fastSimpleUUID());
+            MDC.put(CommonConst.TRACE_ID, IdUtil.fastSimpleUUID());
         }
 
     }

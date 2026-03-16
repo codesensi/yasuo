@@ -3,10 +3,11 @@ package cn.codesensi.yasuo.sys.controller;
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.annotation.LogOperate;
 import cn.codesensi.yasuo.base.BaseController;
-import cn.codesensi.yasuo.sys.entity.SysUser;
 import cn.codesensi.yasuo.enums.OperateType;
+import cn.codesensi.yasuo.pojo.entity.SysUser;
+import cn.codesensi.yasuo.pojo.vo.RouteVO;
 import cn.codesensi.yasuo.sys.service.ISysUserService;
-import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +18,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 用户信息表 前端控制器
@@ -91,9 +95,8 @@ public class SysUserController extends BaseController {
                               @ParameterObject SysUser sysUser) {
         Page<SysUser> page = new Page<>(current, size);
         return sysUserService.lambdaQuery()
-                // TODO 组织条件
-                .eq(ObjUtil.isNotNull(sysUser.getId()), SysUser::getId, sysUser.getId())
-                .orderByDesc(SysUser::getCreateTime)
+                .like(StrUtil.isNotBlank(sysUser.getUsername()), SysUser::getUsername, sysUser.getUsername())
+                .orderByDesc(Arrays.asList(SysUser::getCreateTime, SysUser::getId))
                 .page(page);
     }
 
@@ -110,6 +113,30 @@ public class SysUserController extends BaseController {
     @GetMapping("/detail/{id}")
     public SysUser detail(@PathVariable(name = "id") Long id) {
         return sysUserService.getById(id);
+    }
+
+    /**
+     * 获取当前用户的路由菜单树
+     *
+     * @return List<RouteVO> 路由菜单树
+     */
+    @ApiOperationSupport(order = 6)
+    @Operation(summary = "获取当前用户的路由菜单树")
+    @GetMapping("/getRoutes")
+    public List<RouteVO> getRoutes() {
+        return sysUserService.getRoutes();
+    }
+
+    /**
+     * 获取当前用户信息
+     *
+     * @return SysUser 用户信息
+     */
+    @ApiOperationSupport(order = 7)
+    @Operation(summary = "获取当前用户信息")
+    @GetMapping("/getMine")
+    public SysUser getMine() {
+        return sysUserService.getMine();
     }
 
 }

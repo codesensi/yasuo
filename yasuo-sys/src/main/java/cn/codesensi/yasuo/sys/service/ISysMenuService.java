@@ -1,6 +1,7 @@
 package cn.codesensi.yasuo.sys.service;
 
-import cn.codesensi.yasuo.sys.entity.SysMenu;
+import cn.codesensi.yasuo.pojo.entity.SysMenu;
+import cn.codesensi.yasuo.pojo.vo.RouteVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -16,5 +17,14 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param userId 用户ID
      * @return 权限编码列表
      */
-    List<String> listPermsByUserId(Long userId);
+    List<String> listPermsCodeByUserId(Long userId);
+
+    /**
+     * 查询用户路由菜单树
+     *
+     * @param userId 用户id
+     * @return 路由菜单树
+     */
+    List<RouteVO> getRoutesByUserId(Long userId);
+
 }

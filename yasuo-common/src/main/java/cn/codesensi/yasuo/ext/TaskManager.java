@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.ext;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.ThreadConst;
 import cn.codesensi.yasuo.util.SpringUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -16,12 +16,12 @@ public class TaskManager {
     /**
      * 异步任务执行器
      */
-    private final ThreadPoolTaskExecutor asyncTaskExecutor = SpringUtil.getBean(Constant.ASYNC_TASK_EXECUTOR_NAME, ThreadPoolTaskExecutor.class);
+    private final ThreadPoolTaskExecutor asyncTaskExecutor = SpringUtil.getBean(ThreadConst.ASYNC_TASK_EXECUTOR_NAME, ThreadPoolTaskExecutor.class);
 
     /**
      * 定时额任务执行器
      */
-    private final ScheduledExecutorService scheduledTaskExecutor = SpringUtil.getBean(Constant.SCHEDULED_TASK_EXECUTOR_NAME, ScheduledExecutorService.class);
+    private final ScheduledExecutorService scheduledTaskExecutor = SpringUtil.getBean(ThreadConst.SCHEDULED_TASK_EXECUTOR_NAME, ScheduledExecutorService.class);
 
 
     /**

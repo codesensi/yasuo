@@ -1,10 +1,10 @@
 package cn.codesensi.yasuo.strategy.captcha.impl;
 
-import cn.codesensi.yasuo.constant.CacheConstant;
+import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.exception.SysException;
 import cn.codesensi.yasuo.pojo.dto.CaptchaDTO;
 import cn.codesensi.yasuo.pojo.vo.CaptchaVO;
-import cn.codesensi.yasuo.properties.CaptchaProperties;
+import cn.codesensi.yasuo.properties.CustomProperties;
 import cn.codesensi.yasuo.strategy.captcha.CaptchaStrategy;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @Service("imageCaptchaStrategy")
 public class ImageCaptchaStrategyImpl implements CaptchaStrategy {
 
-    private final CaptchaProperties captchaProperties;
+    private final CustomProperties customProperties;
     private final StringRedisTemplate stringRedisTemplate;
 
     /**
@@ -34,7 +34,7 @@ public class ImageCaptchaStrategyImpl implements CaptchaStrategy {
      */
     @Override
     public CaptchaVO captcha(CaptchaDTO captchaDTO) {
-        CaptchaProperties.ImageType imageType = captchaProperties.getImageType();
+        CustomProperties.Captcha.ImageType imageType = customProperties.getCaptcha().getImageType();
         String name = imageType.name();
         // 构建类名
         name = name.toLowerCase();
@@ -54,7 +54,7 @@ public class ImageCaptchaStrategyImpl implements CaptchaStrategy {
             String text = captcha.text();
             log.info("图形验证码唯一标识：{}，验证码内容：{}", key, text);
             // 放入缓存
-            stringRedisTemplate.opsForValue().set(key, text, CacheConstant.EXPIRE_5_MINUTES, TimeUnit.MINUTES);
+            stringRedisTemplate.opsForValue().set(key, text, CacheConst.EXPIRE_5_MINUTES, TimeUnit.MINUTES);
             // 返回结果
             captchaVO.setKey(key);
             captchaVO.setResult(captcha.toBase64());

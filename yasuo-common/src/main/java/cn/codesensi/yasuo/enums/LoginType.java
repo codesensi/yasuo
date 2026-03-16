@@ -3,29 +3,17 @@ package cn.codesensi.yasuo.enums;
 import lombok.Getter;
 
 /**
- * 授权类型
+ * 登录类型
+ * 0-未知
+ * 1-登录
+ * 2-登出
+ * 3-封禁
  */
 @Getter
 public enum LoginType {
-
-    /**
-     * 未知
-     */
     OTHER(0, "未知"),
-
-    /**
-     * 登录
-     */
     LOGIN(1, "登录"),
-
-    /**
-     * 登出
-     */
     LOGOUT(2, "登出"),
-
-    /**
-     * 封禁
-     */
     DISABLE(3, "封禁"),
     ;
 

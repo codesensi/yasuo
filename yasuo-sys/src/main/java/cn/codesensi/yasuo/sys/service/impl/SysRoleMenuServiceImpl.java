@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.sys.service.impl;
 
-import cn.codesensi.yasuo.sys.entity.SysRoleMenu;
+import cn.codesensi.yasuo.pojo.entity.SysRoleMenu;
 import cn.codesensi.yasuo.sys.mapper.SysRoleMenuMapper;
 import cn.codesensi.yasuo.sys.service.ISysRoleMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StpInterfaceImpl implements StpInterface {
 
+
     private final ISysRoleService sysRoleService;
     private final ISysMenuService sysMenuService;
 
@@ -27,7 +28,9 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        return sysMenuService.listPermsByUserId(Long.valueOf(String.valueOf(loginId)));
+        String userIdStr = String.valueOf(loginId);
+        Long userId = Long.valueOf(userIdStr);
+        return sysMenuService.listPermsCodeByUserId(userId);
     }
 
     /**
@@ -39,7 +42,9 @@ public class StpInterfaceImpl implements StpInterface {
      */
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        return sysRoleService.listRoleCodeByUserId(Long.valueOf(String.valueOf(loginId)));
+        String userIdStr = String.valueOf(loginId);
+        Long userId = Long.valueOf(userIdStr);
+        return sysRoleService.listRoleCodeByUserId(userId);
     }
 
 }

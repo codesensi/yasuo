@@ -1,9 +1,14 @@
 package cn.codesensi.yasuo.api.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
+import cn.codesensi.yasuo.annotation.LogOperate;
 import cn.codesensi.yasuo.api.service.LoginService;
-import cn.codesensi.yasuo.pojo.dto.AccountUserDTO;
-import cn.codesensi.yasuo.pojo.vo.LoginSuccessVO;
+import cn.codesensi.yasuo.enums.OperateType;
+import cn.codesensi.yasuo.pojo.dto.AccountDTO;
+import cn.codesensi.yasuo.pojo.dto.LogoutDTO;
+import cn.codesensi.yasuo.pojo.dto.TokenRefreshDTO;
+import cn.codesensi.yasuo.pojo.vo.LoginVO;
+import cn.codesensi.yasuo.pojo.vo.TokenRefreshVO;
 import cn.dev33.satoken.annotation.SaIgnore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,11 +37,34 @@ public class LoginController {
     /**
      * 账号密码登录
      */
+    @LogOperate(description = "账号密码登录")
     @SaIgnore
     @Operation(summary = "账号密码登录")
     @PostMapping("/login/account")
-    public LoginSuccessVO loginAccount(@Validated @RequestBody AccountUserDTO accountUserDTO) {
-        return loginService.loginAccount(accountUserDTO);
+    public LoginVO loginAccount(@Validated @RequestBody AccountDTO accountDTO) {
+        return loginService.loginAccount(accountDTO);
+    }
+
+    /**
+     * 刷新token
+     */
+    @LogOperate(description = "刷新token")
+    @SaIgnore
+    @Operation(summary = "刷新token")
+    @PostMapping("/token/refresh")
+    public TokenRefreshVO tokenRefresh(@Validated @RequestBody TokenRefreshDTO tokenRefreshDTO) {
+        return loginService.tokenRefresh(tokenRefreshDTO);
+    }
+
+    /**
+     * 退出登录
+     */
+    @LogOperate(description = "退出登录")
+    @SaIgnore
+    @Operation(summary = "退出登录")
+    @PostMapping("/logout")
+    public void logout(@RequestBody LogoutDTO logoutDTO) {
+        loginService.logout(logoutDTO);
     }
 
 }

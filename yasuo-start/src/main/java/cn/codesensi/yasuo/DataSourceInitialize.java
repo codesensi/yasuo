@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.properties.DBProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +69,7 @@ public class DataSourceInitialize {
             // 组装不连接至指定库的连接URL
             noDatabaseUrl = "jdbc:" + databasePlatform + "://" + hostAndPort + "/";
             // 得到连接地址中的库名
-            databaseName = databaseUri.getPath().substring(Constant.ONE_INT);
+            databaseName = databaseUri.getPath().substring(CommonConst.ONE_INT);
         } catch (URISyntaxException e) {
             log.error("[数据初始化]获取数据库配置失败！原因是：{}", e.getMessage(), e);
             throw new RuntimeException(e);
@@ -79,12 +79,12 @@ public class DataSourceInitialize {
         // 查询表名判断是否需要初始化数据
         try (Connection connection = DriverManager.getConnection(propertiesUrl, dbProperties.getUsername(), dbProperties.getPassword());
              Statement statement = connection.createStatement()) {
-            ResultSet tableResult = statement.executeQuery("SELECT table_name FROM information_schema.TABLES WHERE table_name = 'sys_config' AND table_schema = '" + databaseName + "'");
+            ResultSet tableResult = statement.executeQuery("SELECT table_name FROM information_schema.TABLES WHERE table_name = 'sys_user' AND table_schema = '" + databaseName + "'");
             if (tableResult.next()) {
-                log.info("|-----[数据初始化]初始数据已存在，无需初始化-----|");
+                log.info("|-----[数据初始化]初始数据已存在，无需初始化");
                 return Boolean.FALSE;
             } else {
-                log.warn("|-----[数据初始化]初始数据不存在，开始初始化数据-----|");
+                log.warn("|-----[数据初始化]初始数据不存在，开始初始化数据");
                 return Boolean.TRUE;
             }
         } catch (Exception e) {
@@ -102,12 +102,12 @@ public class DataSourceInitialize {
             // 查询数据库
             ResultSet databaseResult = statement.executeQuery("SELECT schema_name FROM information_schema.schemata WHERE schema_name = '" + databaseName + "'");
             if (databaseResult.next()) {
-                log.info("|-----[数据初始化]数据库已存在，无需创建-----|");
+                log.info("|-----[数据初始化]数据库已存在，无需创建");
             } else {
                 // 创建数据库
-                log.warn("|-----[数据初始化]数据库不存在，开始创建数据库-----|");
+                log.warn("|-----[数据初始化]数据库不存在，开始创建数据库");
                 statement.execute("CREATE DATABASE IF NOT EXISTS `" + databaseName + "` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
-                log.info("|-----[数据初始化]创建数据库完成-----|");
+                log.info("|-----[数据初始化]创建数据库完成");
             }
         } catch (Exception e) {
             log.error("[数据初始化]创建数据库失败！原因是：{}", e.getMessage(), e);

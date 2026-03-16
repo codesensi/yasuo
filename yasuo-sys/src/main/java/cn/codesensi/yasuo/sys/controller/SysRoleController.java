@@ -3,7 +3,7 @@ package cn.codesensi.yasuo.sys.controller;
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.annotation.LogOperate;
 import cn.codesensi.yasuo.base.BaseController;
-import cn.codesensi.yasuo.sys.entity.SysRole;
+import cn.codesensi.yasuo.pojo.entity.SysRole;
 import cn.codesensi.yasuo.enums.OperateType;
 import cn.codesensi.yasuo.sys.service.ISysRoleService;
 import cn.hutool.core.util.ObjUtil;

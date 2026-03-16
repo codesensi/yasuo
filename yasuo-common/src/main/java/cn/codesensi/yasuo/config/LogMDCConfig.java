@@ -1,6 +1,6 @@
 package cn.codesensi.yasuo.config;
 
-import cn.codesensi.yasuo.constant.Constant;
+import cn.codesensi.yasuo.constants.RbacConst;
 import cn.codesensi.yasuo.interceptor.LogMDCInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class LogMDCConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LogMDCInterceptor()).addPathPatterns(Constant.ROOT_PATH);
+        registry.addInterceptor(new LogMDCInterceptor()).addPathPatterns(RbacConst.ROOT_PATH);
     }
 
 }

@@ -1,9 +1,9 @@
 package cn.codesensi.yasuo.aspect;
 
 import cn.codesensi.yasuo.annotation.LogOperate;
-import cn.codesensi.yasuo.constant.Constant;
-import cn.codesensi.yasuo.factory.LogRecordFactory;
+import cn.codesensi.yasuo.enums.CommonEnum;
 import cn.codesensi.yasuo.ext.TaskManager;
+import cn.codesensi.yasuo.factory.LogRecordFactory;
 import cn.codesensi.yasuo.util.Ip2regionUtil;
 import cn.codesensi.yasuo.util.IpUtil;
 import cn.codesensi.yasuo.util.ServletUtil;
@@ -93,7 +93,7 @@ public class LogOperateAspect {
                 String requestMethod = StrUtil.join(".", signature.getDeclaringTypeName(), signature.getName());
                 String requestMode = request.getMethod();
 
-                cn.codesensi.yasuo.sys.entity.LogOperate logOperate = new cn.codesensi.yasuo.sys.entity.LogOperate();
+                cn.codesensi.yasuo.pojo.entity.LogOperate logOperate = new cn.codesensi.yasuo.pojo.entity.LogOperate();
                 // 获取注解信息
                 LogOperate annotationLogOperate = getAnnotationLog(joinPoint);
                 Optional.ofNullable(annotationLogOperate).ifPresent(l -> {
@@ -130,15 +130,22 @@ public class LogOperateAspect {
                 logOperate.setRequestMethod(requestMethod);
                 logOperate.setRequestMode(requestMode);
                 // 响应相关字段
-                logOperate.setResponseStatus(Constant.ONE_INT);
+                logOperate.setResponseStatus(CommonEnum.OkOrFail.OK.getCode());
                 logOperate.setResponseTime(LocalDateTime.now());
                 logOperate.setResponseConsume(System.currentTimeMillis() - TIME_THREADLOCAL.get());
+                log.info("|-----请求来源：{}", logOperate.getRequestIp());
+                log.info("|-----请求接口：{}", logOperate.getRequestUrl());
+                log.info("|-----请求方法：{}", logOperate.getRequestMethod());
+                log.info("|-----请求参数：{}", logOperate.getRequestParam());
                 // 异常相关字段
                 if (ObjUtil.isNotNull(throwable)) {
-                    logOperate.setResponseStatus(Constant.ZERO_INT);
+                    logOperate.setResponseStatus(CommonEnum.OkOrFail.FAIL.getCode());
                     logOperate.setErrorTime(LocalDateTime.now());
                     logOperate.setErrorMessage(throwable.getMessage());
+                    log.error("|-----异常原因：{}", logOperate.getErrorMessage());
                 }
+                log.info("|-----请求返回：{}", logOperate.getResponseData());
+                log.info("|-----请求耗时：{}ms", logOperate.getResponseConsume());
                 if (StpUtil.isLogin()) {
                     logOperate.setCreator(StpUtil.getLoginIdAsLong());
                 }
