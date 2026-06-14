@@ -2,7 +2,6 @@ package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.annotation.LogOperate;
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.enums.OperateType;
 import cn.codesensi.yasuo.pojo.entity.SysUser;
 import cn.codesensi.yasuo.pojo.vo.RouteVO;
@@ -30,7 +29,7 @@ import java.util.List;
 @RestController
 @Tag(name = "用户信息表接口", description = "用户信息表接口")
 @RequestMapping("/sys/user")
-public class SysUserController extends BaseController {
+public class SysUserController {
 
     private final ISysUserService sysUserService;
 

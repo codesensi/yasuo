@@ -1,6 +1,5 @@
 package cn.codesensi.yasuo;
 
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.base.BaseEntity;
 import cn.hutool.core.date.DatePattern;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
@@ -70,7 +69,6 @@ public class CodeGenerator {
                                 // Controller 策略配置
                                 .controllerBuilder()
                                 .template(CONTROLLER)
-                                .superClass(BaseController.class)
                                 .enableHyphenStyle() // 开启驼峰转连字符
                                 .enableRestStyle() // 开启生成@RestController 控制器
                                 // Service 策略配置

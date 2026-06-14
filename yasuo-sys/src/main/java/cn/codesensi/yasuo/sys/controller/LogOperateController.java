@@ -1,7 +1,6 @@
 package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.pojo.entity.LogOperate;
 import cn.codesensi.yasuo.sys.service.ILogOperateService;
 import cn.hutool.core.util.ObjUtil;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "操作日志表接口", description = "操作日志表接口")
 @RequestMapping("/log/operate")
-public class LogOperateController extends BaseController {
+public class LogOperateController {
 
     private final ILogOperateService logOperateService;
 

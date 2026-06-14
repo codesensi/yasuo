@@ -1,7 +1,6 @@
 package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.pojo.entity.SysUserRole;
 import cn.codesensi.yasuo.sys.service.ISysUserRoleService;
 import cn.hutool.core.util.ObjUtil;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 // @RestController
 // @Tag(name = "用户角色关联表接口", description = "用户角色关联表接口")
 // @RequestMapping("/sys-user-role")
-public class SysUserRoleController extends BaseController {
+public class SysUserRoleController {
 
     private final ISysUserRoleService sysUserRoleService;
 

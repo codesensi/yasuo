@@ -1,7 +1,6 @@
 package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.pojo.entity.LogLogin;
 import cn.codesensi.yasuo.sys.service.ILogLoginService;
 import cn.hutool.core.util.ObjUtil;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "登录日志表接口", description = "登录日志表接口")
 @RequestMapping("/log/login")
-public class LogLoginController extends BaseController {
+public class LogLoginController {
 
     private final ILogLoginService logLoginService;
 

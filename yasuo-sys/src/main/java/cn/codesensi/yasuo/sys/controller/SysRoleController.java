@@ -2,7 +2,6 @@ package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
 import cn.codesensi.yasuo.annotation.LogOperate;
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.pojo.entity.SysRole;
 import cn.codesensi.yasuo.enums.OperateType;
 import cn.codesensi.yasuo.sys.service.ISysRoleService;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "角色信息表接口", description = "角色信息表接口")
 @RequestMapping("/sys-role")
-public class SysRoleController extends BaseController {
+public class SysRoleController {
 
     private final ISysRoleService sysRoleService;
 

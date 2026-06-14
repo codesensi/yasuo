@@ -1,7 +1,6 @@
 package cn.codesensi.yasuo.sys.controller;
 
 import cn.codesensi.yasuo.annotation.ApiResponseBody;
-import cn.codesensi.yasuo.base.BaseController;
 import cn.codesensi.yasuo.pojo.entity.SysRoleMenu;
 import cn.codesensi.yasuo.sys.service.ISysRoleMenuService;
 import cn.hutool.core.util.ObjUtil;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 // @RestController
 // @Tag(name = "角色菜单关联表接口", description = "角色菜单关联表接口")
 // @RequestMapping("/sys-role-menu")
-public class SysRoleMenuController extends BaseController {
+public class SysRoleMenuController {
 
     private final ISysRoleMenuService sysRoleMenuService;
 
