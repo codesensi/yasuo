@@ -56,7 +56,6 @@ public final class SpringUtil implements BeanFactoryPostProcessor, ApplicationCo
         return beanFactory.isSingleton(name);
     }
 
-
     /**
      * 获取当前的环境配置，无配置返回null
      */
@@ -77,5 +76,12 @@ public final class SpringUtil implements BeanFactoryPostProcessor, ApplicationCo
      */
     public static String getRequiredProperty(String key) {
         return applicationContext.getEnvironment().getRequiredProperty(key);
+    }
+
+    /**
+     * 获取项目名称
+     */
+    public static String getApplicationName() {
+        return applicationContext.getEnvironment().getRequiredProperty("spring.application.name");
     }
 }
