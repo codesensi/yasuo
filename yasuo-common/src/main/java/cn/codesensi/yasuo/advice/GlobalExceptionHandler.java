@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -79,8 +78,8 @@ public class GlobalExceptionHandler {
     /**
      * 参数缺失异常
      */
-    @ExceptionHandler(ServletRequestBindingException.class)
-    public Result<?> servletRequestBindingExceptionHandler(MissingServletRequestParameterException e) {
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Result<?> missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException e) {
         log.error("参数缺失异常！原因是：{}", e.getMessage(), e);
         return R.fail(ResultStatus.PARAMETER_MISSING.getCode(), "缺少必须参数：" + e.getParameterName());
     }
