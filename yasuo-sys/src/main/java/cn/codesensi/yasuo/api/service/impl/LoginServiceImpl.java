@@ -2,11 +2,7 @@ package cn.codesensi.yasuo.api.service.impl;
 
 import cn.codesensi.yasuo.api.service.LoginService;
 import cn.codesensi.yasuo.constants.CommonConst;
-import cn.codesensi.yasuo.enums.LoginMode;
-import cn.codesensi.yasuo.enums.LoginType;
 import cn.codesensi.yasuo.exception.LoginException;
-import cn.codesensi.yasuo.ext.TaskManager;
-import cn.codesensi.yasuo.factory.LogRecordFactory;
 import cn.codesensi.yasuo.pojo.dto.AccountDTO;
 import cn.codesensi.yasuo.pojo.dto.LogoutDTO;
 import cn.codesensi.yasuo.pojo.dto.TokenRefreshDTO;
@@ -15,7 +11,6 @@ import cn.codesensi.yasuo.pojo.vo.LoginVO;
 import cn.codesensi.yasuo.pojo.vo.TokenRefreshVO;
 import cn.codesensi.yasuo.properties.CustomProperties;
 import cn.codesensi.yasuo.sys.service.ISysUserService;
-import cn.codesensi.yasuo.util.ServletUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
@@ -107,7 +102,7 @@ public class LoginServiceImpl implements LoginService {
         loginVO.setPermissions(perms);
 
         // 异步记录登录成功日志
-        TaskManager.me().execute(LogRecordFactory.login(StpUtil.getLoginIdAsLong(), LoginType.LOGIN.getCode(), LoginMode.ACCOUNT.getCode(), ServletUtil.getRequest()));
+//        TaskManager.me().execute(LogRecordFactory.login(StpUtil.getLoginIdAsLong(), LoginType.LOGIN.getCode(), LoginMode.ACCOUNT.getCode(), ServletUtil.getRequest()));
         return loginVO;
     }
 
@@ -153,7 +148,7 @@ public class LoginServiceImpl implements LoginService {
             if (ObjUtil.isNotNull(userId)) {
                 StpUtil.logout(userId);
                 // 异步记录登出成功日志
-                TaskManager.me().execute(LogRecordFactory.login(userId, LoginType.LOGOUT.getCode(), null, ServletUtil.getRequest()));
+//                TaskManager.me().execute(LogRecordFactory.login(userId, LoginType.LOGOUT.getCode(), null, ServletUtil.getRequest()));
             }
         }
         // 同步删除refreshToken
