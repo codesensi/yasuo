@@ -4,6 +4,7 @@ import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.constants.CommonConst;
 import cn.codesensi.yasuo.constants.RbacConst;
 import cn.codesensi.yasuo.enums.CommonEnum;
+import cn.codesensi.yasuo.ext.CacheKeyPrefix;
 import cn.codesensi.yasuo.pojo.entity.SysMenu;
 import cn.codesensi.yasuo.pojo.entity.SysRole;
 import cn.codesensi.yasuo.pojo.vo.MetaVO;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
     private final ISysRoleService sysRoleService;
+    private final CacheKeyPrefix cacheKeyPrefix;
 
     /**
      * 返回一个账号所拥有的权限编码列表
@@ -38,7 +40,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @param userId 用户ID
      * @return 权限编码列表
      */
-    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'perms:' + #userId")
+    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "#cacheKeyPrefix.getCacheKeyPrefix() + 'perms:' + #userId")
     @Override
     public List<String> listPermsCodeByUserId(Long userId) {
         // 获取去重后的角色列表
@@ -68,7 +70,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @param userId 用户id
      * @return 路由菜单树
      */
-    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "'routes:' + #userId")
+    @Cacheable(cacheNames = CacheConst.CACHE_USER, key = "#cacheKeyPrefix.getCacheKeyPrefix() + 'routes:' + #userId")
     @Override
     public List<RouteVO> getRoutesByUserId(Long userId) {
         // 获取用户的角色编码列表

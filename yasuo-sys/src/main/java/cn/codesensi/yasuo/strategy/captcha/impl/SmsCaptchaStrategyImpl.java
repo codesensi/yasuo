@@ -2,10 +2,10 @@ package cn.codesensi.yasuo.strategy.captcha.impl;
 
 import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.exception.SysException;
+import cn.codesensi.yasuo.ext.CacheKeyPrefix;
 import cn.codesensi.yasuo.pojo.dto.CaptchaDTO;
 import cn.codesensi.yasuo.pojo.vo.CaptchaVO;
 import cn.codesensi.yasuo.strategy.captcha.CaptchaStrategy;
-import cn.codesensi.yasuo.util.SpringUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class SmsCaptchaStrategyImpl implements CaptchaStrategy {
 
     private final StringRedisTemplate stringRedisTemplate;
+    private final CacheKeyPrefix cacheKeyPrefix;
 
     /**
      * 生成短信验证码
@@ -35,10 +36,7 @@ public class SmsCaptchaStrategyImpl implements CaptchaStrategy {
             throw new SysException("手机号不能为空");
         }
         // 生成验证码
-        // 获取项目名称及部署环境
-        String applicationName = SpringUtil.getApplicationName();
-        String activeProfile = SpringUtil.getActiveProfile();
-        String key = applicationName + "_" + activeProfile + ":sms:" + phone;
+        String key = cacheKeyPrefix.getCacheKeyPrefix() + "sms:" + phone;
         String result = RandomUtil.randomNumbers(6);
         log.info("短信验证码手机号：{}，验证码内容：{}", phone, result);
 

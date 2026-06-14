@@ -68,7 +68,7 @@ public final class SpringUtil implements BeanFactoryPostProcessor, ApplicationCo
      */
     public static String getActiveProfile() {
         final String[] activeProfiles = getActiveProfiles();
-        return ObjUtil.isNotEmpty(activeProfiles) ? activeProfiles[0] : null;
+        return ObjUtil.isNotEmpty(activeProfiles) ? activeProfiles[0] : applicationContext.getEnvironment().getRequiredProperty("spring.profiles.active");
     }
 
     /**
