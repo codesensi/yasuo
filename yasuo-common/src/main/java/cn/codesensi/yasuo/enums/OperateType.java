@@ -13,10 +13,12 @@ import lombok.Getter;
 @Getter
 public enum OperateType {
     OTHER(0, "未知"),
-    INSERT(1, "新增"),
-    UPDATE(2, "更新"),
-    QUERY(3, "查询"),
-    DELETE(4, "删除"),
+    LOGIN(1, "登录"),
+    LOGOUT(2, "登出"),
+    INSERT(3, "新增"),
+    UPDATE(4, "更新"),
+    QUERY(5, "查询"),
+    DELETE(6, "删除"),
     ;
 
     /**

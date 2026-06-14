@@ -37,7 +37,7 @@ public class LoginController {
     /**
      * 账号密码登录
      */
-    @LogOperate(description = "账号密码登录")
+    @LogOperate(operateType = OperateType.LOGIN, description = "账号密码登录")
     @SaIgnore
     @Operation(summary = "账号密码登录")
     @PostMapping("/login/account")
@@ -59,7 +59,7 @@ public class LoginController {
     /**
      * 退出登录
      */
-    @LogOperate(description = "退出登录")
+    @LogOperate(operateType = OperateType.LOGOUT, description = "退出登录")
     @SaIgnore
     @Operation(summary = "退出登录")
     @PostMapping("/logout")
