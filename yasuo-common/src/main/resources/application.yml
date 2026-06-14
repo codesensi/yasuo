@@ -20,7 +20,7 @@ custom:
     redis-default-expires-time: 2592000
 
 server:
-  port: 8080
+  port: 9098
   # 开启优雅停机
   shutdown: graceful
 
