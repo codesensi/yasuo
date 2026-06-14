@@ -9,7 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 验证码策略上下文
@@ -19,6 +20,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CaptchaStrategyContext {
 
+    /**
+     * 策略类型缓存，避免每次请求遍历枚举
+     */
+    private static final Map<String, CaptchaStrategyType> STRATEGY_TYPE_MAP = Arrays.stream(CaptchaStrategyType.values())
+            .collect(Collectors.toUnmodifiableMap(CaptchaStrategyType::getCode, type -> type));
+
     private final CaptchaStrategyFactory captchaStrategyFactory;
 
     /**
@@ -27,15 +34,12 @@ public class CaptchaStrategyContext {
     public CaptchaVO captcha(CaptchaDTO captchaDTO) {
         // 将属性的值转换成具体的枚举
         String type = captchaDTO.getType();
-        Optional<CaptchaStrategyType> optional = Arrays.stream(CaptchaStrategyType.class.getEnumConstants())
-                .filter((e) -> type.equals(e.getCode()))
-                .findAny();
-        if (optional.isEmpty()) {
+        CaptchaStrategyType captchaStrategyType = STRATEGY_TYPE_MAP.get(type);
+        if (captchaStrategyType == null) {
             log.error("未匹配到验证码策略：{}", type);
             throw new SysException("验证码生成失败");
         }
         // 获取策略实现
-        CaptchaStrategyType captchaStrategyType = optional.get();
         CaptchaStrategy captchaStrategy = captchaStrategyFactory.getCaptchaStrategy(captchaStrategyType);
         return captchaStrategy.captcha(captchaDTO);
     }
