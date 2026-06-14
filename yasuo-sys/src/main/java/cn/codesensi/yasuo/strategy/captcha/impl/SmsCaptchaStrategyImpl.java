@@ -5,6 +5,7 @@ import cn.codesensi.yasuo.exception.SysException;
 import cn.codesensi.yasuo.pojo.dto.CaptchaDTO;
 import cn.codesensi.yasuo.pojo.vo.CaptchaVO;
 import cn.codesensi.yasuo.strategy.captcha.CaptchaStrategy;
+import cn.codesensi.yasuo.util.SpringUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,10 @@ public class SmsCaptchaStrategyImpl implements CaptchaStrategy {
             throw new SysException("手机号不能为空");
         }
         // 生成验证码
-        String key = "sms:" + phone;
+        // 获取项目名称及部署环境
+        String applicationName = SpringUtil.getApplicationName();
+        String activeProfile = SpringUtil.getActiveProfile();
+        String key = applicationName + "_" + activeProfile + ":sms:" + phone;
         String result = RandomUtil.randomNumbers(6);
         log.info("短信验证码手机号：{}，验证码内容：{}", phone, result);
 
