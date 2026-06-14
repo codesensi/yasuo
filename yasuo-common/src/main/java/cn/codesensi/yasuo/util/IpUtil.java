@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.regex.Pattern;
 
 /**
  * IP地址工具类
@@ -14,12 +15,16 @@ import java.net.UnknownHostException;
 
 @Slf4j
 public class IpUtil {
+    // 正则表达式字符串（保留供需要原生字符串的场景使用）
     public final static String REGX_0_255 = "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)";
-    // 匹配 ip
     public final static String REGX_IP = "((" + REGX_0_255 + "\\.){3}" + REGX_0_255 + ")";
     public final static String REGX_IP_WILDCARD = "(((\\*\\.){3}\\*)|(" + REGX_0_255 + "(\\.\\*){3})|(" + REGX_0_255 + "\\." + REGX_0_255 + ")(\\.\\*){2}" + "|((" + REGX_0_255 + "\\.){3}\\*))";
-    // 匹配网段
     public final static String REGX_IP_SEG = "(" + REGX_IP + "-" + REGX_IP + ")";
+
+    // 编译后的正则Pattern常量，避免每次匹配时重复编译
+    private static final Pattern PATTERN_IP = Pattern.compile(REGX_IP);
+    private static final Pattern PATTERN_IP_WILDCARD = Pattern.compile(REGX_IP_WILDCARD);
+    private static final Pattern PATTERN_IP_SEG = Pattern.compile(REGX_IP_SEG);
 
     /**
      * 获取客户端IP
@@ -269,14 +274,14 @@ public class IpUtil {
      * 是否为IP
      */
     public static boolean isIP(String ip) {
-        return StrUtil.isNotBlank(ip) && ip.matches(REGX_IP);
+        return StrUtil.isNotBlank(ip) && PATTERN_IP.matcher(ip).matches();
     }
 
     /**
      * 是否为IP，或 *为间隔的通配符地址
      */
     public static boolean isIpWildCard(String ip) {
-        return StrUtil.isNotBlank(ip) && ip.matches(REGX_IP_WILDCARD);
+        return StrUtil.isNotBlank(ip) && PATTERN_IP_WILDCARD.matcher(ip).matches();
     }
 
     /**
@@ -299,7 +304,7 @@ public class IpUtil {
      * 是否为特定格式如:“10.10.10.1-10.10.10.99”的ip段字符串
      */
     public static boolean isIPSegment(String ipSeg) {
-        return StrUtil.isNotBlank(ipSeg) && ipSeg.matches(REGX_IP_SEG);
+        return StrUtil.isNotBlank(ipSeg) && PATTERN_IP_SEG.matcher(ipSeg).matches();
     }
 
     /**
