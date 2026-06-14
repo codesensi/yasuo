@@ -2,11 +2,11 @@ package cn.codesensi.yasuo.strategy.captcha.impl;
 
 import cn.codesensi.yasuo.constants.CacheConst;
 import cn.codesensi.yasuo.exception.SysException;
-import cn.codesensi.yasuo.ext.CacheKeyPrefix;
 import cn.codesensi.yasuo.pojo.dto.CaptchaDTO;
 import cn.codesensi.yasuo.pojo.vo.CaptchaVO;
 import cn.codesensi.yasuo.properties.CustomProperties;
 import cn.codesensi.yasuo.strategy.captcha.CaptchaStrategy;
+import cn.codesensi.yasuo.util.CacheUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.wf.captcha.ArithmeticCaptcha;
@@ -28,7 +28,6 @@ public class ImageCaptchaStrategyImpl implements CaptchaStrategy {
 
     private final CustomProperties customProperties;
     private final StringRedisTemplate stringRedisTemplate;
-    private final CacheKeyPrefix cacheKeyPrefix;
 
     /**
      * 生成图形验证码
@@ -50,7 +49,7 @@ public class ImageCaptchaStrategyImpl implements CaptchaStrategy {
                 String arithmeticString = ((ArithmeticCaptcha) captcha).getArithmeticString();
                 log.info("算术验证码运算公式：{}", arithmeticString);
             }
-            String key = cacheKeyPrefix.getCacheKeyPrefix() + "image:" + UUID.fastUUID().toString(true);
+            String key = CacheUtil.getPrefix("captcha:image:") + UUID.fastUUID().toString(true);
             // 验证码结果
             String text = captcha.text();
             log.info("图形验证码唯一标识：{}，验证码内容：{}", key, text);
